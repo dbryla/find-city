@@ -4,7 +4,8 @@ from tornado import web, ioloop
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
-    "debug": True
+    "debug": True,
+    "autoreload": True
 }
 
 class IndexHandler(web.RequestHandler):
