@@ -1,3 +1,37 @@
 <html>
-    <p>Hello world!</p>
+<head>
+    <title>Hello World!</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<p>Hello world!</p>
+
+<script>
+    jQuery(function($){
+        var host = "ws://localhost:8080/socket";
+        var socket = new WebSocket(host);
+
+        if(socket){
+              socket.onopen = function(){
+                alert("connection opened....");
+              }
+
+              socket.onmessage = function(msg){
+              }
+
+              socket.onclose = function(){
+                alert("connection closed....");
+              }
+
+            }else{
+              console.log("invalid socket");
+            }
+    });
+
+
+
+
+
+</script>
+</body>
 </html>
