@@ -7,15 +7,22 @@ function decrementTimer() {
     }
 }
 
+function initGame() {
+    setGameScene();
+    setPlayerScore(0);
+    setOpponentScore(0);
+    setRound(1, 10);
+    hideInfo();
+}
+
 function init() {
     $("#play-btn").click(function () {
-        setGameScene();
-        setPlayerScore(0);
-        setOpponentScore(0);
-        setRound(1, 10);
-        initSocket();
-        hideInfo();
-        showWaitingModal();
+        initGame();
+        initSocket(false);
+    });
+    $("#play-friend-btn").click(function () {
+        initGame();
+        initSocket(true);
     });
 }
 

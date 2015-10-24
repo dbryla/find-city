@@ -1,9 +1,19 @@
 var timerInterval = 0;
 
-function closeWaitingModal() {
-    $('#waiting-modal').modal('hide');
+function showFriendModal(id) {
+    var modal = $('#friend-modal');
+    modal.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    modal.find("#id").text(id);
+    modal.modal('show');
 }
 
+function closeWaitingModal() {
+    $('#waiting-modal').modal('hide');
+    $('#friend-modal').modal('hide');
+}
 function showWaitingModal() {
     var modal = $('#waiting-modal');
     modal.modal({

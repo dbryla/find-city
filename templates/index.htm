@@ -41,6 +41,8 @@
                     <nav>
                         <ul class="nav masthead-nav">
                             <li class="active"><a href="index.htm">Home</a></li>
+                            <li><a href="#">Ranking</a></li>
+                            <li><a href="#">About</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -51,7 +53,8 @@
                 <p class="lead">Check if you know localization of every city in the world.</p>
 
                 <p class="lead">
-                    <a id="play-btn" class="btn btn-lg btn-default">Play now</a>
+                    <a id="play-btn" class="btn btn-lg btn-primary">Quick Play</a>
+                    <a id="play-friend-btn" class="btn btn-lg btn-default">Play with a friend</a>
                 </p>
             </div>
             <div id="game-wrapper" class="inner cover">
@@ -108,6 +111,23 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Waiting for the opponent...</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="friend-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Your id is <span id="id" class="bold"></span></h4>
+                <p>(Wait or enter your friend's id below)</p>
+
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input class="form-control" id="friend-id" placeholder="Your friend's id" type="text">
+                    </div>
+                    <button id="connect-btn" type="button" class="btn btn-primary">Connect</button>
+                </form>
             </div>
         </div>
     </div>

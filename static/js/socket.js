@@ -1,17 +1,22 @@
 var id;
 var send;
 
-function initSocket() {
-    var host = location.origin.replace(/^http/, 'ws') + "/socket";
-    //var host = "ws://localhost:"+port+"/socket";
+function initSocket(friend) {
+    var initQuery = "/socket";
+    if (friend) {
+        initQuery = "/friend";
+    }
+    var host = location.origin.replace(/^http/, 'ws') + initQuery;
     var socket = new WebSocket(host);
-    //var id;
-    /*
-     $( "#target2" ).click(function() {
-     var wiad = '{"action": "friend", "msg": 2, "id": '+id+'}';
-     socket.send(wiad);
-     });
-     */
+
+    $("#connect-btn").click(function () {
+        var friendId = $("#friend-id");
+        var friendIdText = friendId.val();
+        if (parseInt(friendIdText) > 0) {
+            var wiad = '{"action": "friend", "msg": ' + friendIdText + ', "id": ' + id + '}';
+            socket.send(wiad);
+        }
+    });
 
     if (socket) {
         socket.onopen = function () {
@@ -28,6 +33,11 @@ function initSocket() {
             switch (obj["action"]) {
                 case "init":
                     id = obj["msg"];
+                    if (friend) {
+                        showFriendModal(id);
+                    } else {
+                        showWaitingModal();
+                    }
                     break;
                 case "start":
                     ask_question(obj["msg"]["country"], obj["msg"]["name"]);
