@@ -24,6 +24,7 @@
     <script src="js/ie-emulation-modes-warning.js"></script>
 
     <!-- Custom scripts -->
+    <script src="js/countries.js"></script>
     <script src="js/raphael.js"></script>
     <script src="js/world.js"></script>
     <script src="js/map.js"></script>
@@ -50,8 +51,18 @@
                         <a id="play-btn" class="btn btn-lg btn-default">Play now</a>
                     </p>
                 </div>
-                <div id="game" class="inner cover">
-
+                <div id="game-wrapper" class="inner cover">
+                    <span id="score" class="top-tab"></span>
+                    <span id="question" class="top-tab">
+                        <span id="city"></span>
+                        <img id="flag" src="">
+                        <span id="country"></span>
+                    </span>
+                    <span id="timer" class="top-tab">
+                        <span id="timer-text"></span>
+                        <span id="timer-value"></span>
+                    </span>
+                    <div id="game"></div>
                 </div>
                 <div class="mastfoot">
                     <div class="inner">
