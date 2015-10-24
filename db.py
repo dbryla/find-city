@@ -58,4 +58,15 @@ def isNewRecord(result):
         raise
 
 def saveRecord(name, record):
-    pass
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    query = 'INSERT INTO Rank (name, points) VALUES (\"{}\", \"{}\")'
+    cursor.execute(query.format(name, record))
+    connection.close()
+
+def readRecords():
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    cursor.execute("SELECT name, points FROM Rank ORDER BY points DESC LIMIT 10")
+    rows = cursor.fetchall()
+    return rows

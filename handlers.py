@@ -18,7 +18,6 @@ Y = 'y'
 TIME = 'time'
 MSG = 'msg'
 RECORD_ACTION = 'record'
-NAME = 'name'
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -53,7 +52,9 @@ class SocketHandler(websocket.WebSocketHandler):
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
-            db.saveRecord(message[NAME], players[message[ID]].record)
+            db.saveRecord(message[MSG], players[message[ID]].record)
+            (dbnames, dbpoints) = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
 
     def on_close(self):
         id = sockets[self]

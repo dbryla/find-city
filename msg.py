@@ -15,3 +15,6 @@ def send(msg):
 
 def noFriend():
     return {"action": "error", "msg": "This ID doesnt exist."}
+
+def showRank(dbnames, dbpoints):
+    return {"action": "rank", "msg": [dbnames, dbpoints]}
