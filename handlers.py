@@ -19,6 +19,27 @@ MSG = 'msg'
 RECORD_ACTION = 'record'
 LIST_ACTION ='list'
 
+def close(self):
+    id = sockets[self]
+
+    if players[id] in free_players:
+        free_players.remove(players[id])
+
+    if players[id].game:
+        players[sockets[self]].game.rageQuit(sockets[self])
+
+        player1 = players[id].game.player1
+        player2 = players[id].game.player2
+
+        if player1.record == 0:
+            del sockets[player1.socket]
+            del players[player1.id]
+        if player2.record == 0:
+            del sockets[player2.socket]
+            del players[player2.id]
+
+    print 'connection closed...'
+
 class SocketHandler(websocket.WebSocketHandler):
 
     @gen.coroutine
@@ -60,23 +81,7 @@ class SocketHandler(websocket.WebSocketHandler):
             self.write_message(msg.showRank(rows))
 
     def on_close(self):
-        id = sockets[self]
-
-        if players[id] in free_players:
-            free_players.remove(players[id])
-
-        if players[id].game:
-            players[sockets[self]].game.rageQuit(sockets[self])
-
-            player1 = players[id].game.player1
-            player2 = players[id].game.player2
-
-            del sockets[player1.socket]
-            del sockets[player2.socket]
-            del players[player1.id]
-            del players[player2.id]
-
-        print 'connection closed...'
+        close(self)
 
 class FriendHandler(websocket.WebSocketHandler):
 
@@ -108,28 +113,15 @@ class FriendHandler(websocket.WebSocketHandler):
             self.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == 'friend':
             if message[MSG] in players:
-                Game(self.player, players[message[MSG]]).start()
+                if not players[message[MSG]].game:
+                    Game(self.player, players[message[MSG]]).start()
+                else:
+                    self.write_message(msg.noFriend())
             else:
                 self.write_message(msg.noFriend())
 
     def on_close(self):
-        id = sockets[self]
-
-        if players[id] in free_players:
-            free_players.remove(players[id])
-
-        if players[id].game:
-            players[sockets[self]].game.rageQuit(sockets[self])
-
-            player1 = players[id].game.player1
-            player2 = players[id].game.player2
-
-            del sockets[player1.socket]
-            del sockets[player2.socket]
-            del players[player1.id]
-            del players[player2.id]
-
-        print 'connection closed...'
+        close(self)
 
 class IndexHandler(web.RequestHandler):
     def get(self):
