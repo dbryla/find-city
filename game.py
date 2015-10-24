@@ -22,9 +22,9 @@ class Game(object):
         self.sendToPlayers(wait)
         time.sleep(5)
         self.sendToPlayers(start)
-        Timer(15.0, self.timeout).start()
+        Timer(15.0, self.timeoutFunction).start()
 
-    def timeout(self):
+    def timeoutFunction(self):
         if self.timeout:
             self.end()
 
