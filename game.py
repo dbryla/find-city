@@ -6,11 +6,10 @@ class Game(object):
 
     completed = False
 
-    def __init__(self, id, player1, player2):
-        self.id = id
-        player1.setGame(id)
+    def __init__(self, player1, player2):
+        player1.setGame(self)
         self.player1 = player1
-        player2.setGame(id)
+        player2.setGame(self)
         self.player2 = player2
 
     def start(self):

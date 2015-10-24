@@ -14,7 +14,6 @@ settings = {
 
 players = {}
 free_players = []
-games = {}
 
 ACTION_FIELD = 'action'
 PLAY_ACTION = 'play'
@@ -45,10 +44,7 @@ class SocketHandler(websocket.WebSocketHandler):
         if len(free_players) != 0:
             # match waiting player
             another_player = free_players.pop()
-            game_id = getRandom()
-            game = Game(game_id, player, another_player)
-            games[game_id] = game
-            game.start()
+            Game(player, another_player).start()
         else:
             # wait for another player
             free_players.append(player)
