@@ -53,11 +53,11 @@ class SocketHandler(websocket.WebSocketHandler):
             players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
-            (dbnames, dbpoints) = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+            rows = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == LIST_ACTION:
-            (dbnames, dbpoints) = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+            rows = db.readRecords()
+            self.write_message(msg.showRank(rows))
 
     def on_close(self):
         id = sockets[self]
@@ -101,11 +101,11 @@ class FriendHandler(websocket.WebSocketHandler):
             players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
-            (dbnames, dbpoints) = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+            rows = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == LIST_ACTION:
-            (dbnames, dbpoints) = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+            rows = db.readRecords()
+            self.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == 'friend':
             if message[MSG] in players:
                 Game(self.player, players[message[MSG]]).start()
