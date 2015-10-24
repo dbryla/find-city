@@ -20,19 +20,17 @@ function showModal(text) {
 
 function incRound() {
     var round = $("#round");
-    var roundString = round.text();
-    var roundNumbersString = roundString.split(" ")[1];
-    var roundNumbers = roundNumbersString.split("/");
-    var value = parseInt(roundNumbers[0]) + 1;
-    var totalRounds = roundNumbers[1];
-    round.text("Round " + value + "/" + totalRounds);
+    round.show();
+    var value = parseInt(round.find(".value").text()) + 1;
+    round.find(".value").text(value);
 }
 
 function setRound(value, totalRounds) {
     totalRounds = totalRounds || 10;
     var round = $("#round");
     round.show();
-    round.text("Round " + value + "/" + totalRounds);
+    round.find(".value").text(value);
+    round.find(".total").text(totalRounds);
 }
 
 function hideInfo() {
@@ -43,25 +41,27 @@ function hideInfo() {
 function setPlayerInfo(distance, score) {
     var p1Info = $("#p1-info");
     p1Info.show();
-    p1Info.text("You were off by " + distance + "km and scored " + score + "p");
+    p1Info.find(".distance").text(distance);
+    p1Info.find(".score").text(score);
 }
 
 function setOpponentInfo(distance, score) {
     var p2Info = $("#p2-info");
     p2Info.show();
-    p2Info.text("Your opponent was off by " + distance + "km and scored " + score + "p");
+    p2Info.find(".distance").text(distance);
+    p2Info.find(".score").text(score);
 }
 
 function setPlayerScore(value) {
     var playerScore = $("#player-score");
-    playerScore.show();
-    playerScore.text("Your score: " + value);
+    playerScore.parent().show();
+    playerScore.text(value);
 }
 
 function setOpponentScore(value) {
     var opponentScore = $("#opponent-score");
-    opponentScore.show();
-    opponentScore.text("Opponent's score: " + value);
+    opponentScore.parent().show();
+    opponentScore.text(value);
 }
 
 function getTimerValue() {
