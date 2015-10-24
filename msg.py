@@ -1,5 +1,5 @@
 def gameStart(city):
-    return {"action": "start", "msg": str(city)}
+    return {"action": "start", "msg": {"name": city.name, "country": city.country}}
 
 def gameWait():
     return {"action": "wait", "msg": "5 sec to start"}

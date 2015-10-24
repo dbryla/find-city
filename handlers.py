@@ -76,4 +76,4 @@ class FriendHandler(websocket.WebSocketHandler):
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        self.render("index.htm")

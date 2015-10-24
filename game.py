@@ -37,10 +37,10 @@ class Game(object):
         result1 = dist1 + time1
         result2 = dist2 + time2
 
-        if result1 < result2:
-            return str({"winner_id": self.player1.id, "looser_id": self.player2.id, "distance_winner": dist1, "distance_looser": dist2, "time_winner": time1, "time_looser": time2})
-        else:
-            return str({"winner_id": self.player2.id, "looser_id": self.player1.id, "distance_winner": dist2, "distance_looser": dist1, "time_winner": time2, "time_looser": time1})
+        return  [ 
+                    {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000/dist1},
+                    {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000/dist2}
+                ]
 
     def sendToPlayers(self, txt):
         self.player1.socket.write_message(txt)

@@ -63,7 +63,7 @@ function ask_question(country_code, city) {
     var countryStr = countries[country_code.toUpperCase()];
     $("#question").show();
     $("#country").text(countryStr);
-    $("#flag").attr("src", "img/flags/" + country_code.toLowerCase() + ".png");
+    $("#flag").attr("src", "static/img/flags/" + country_code.toLowerCase() + ".png");
     $("#city").text(city);
 }
 

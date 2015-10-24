@@ -1,7 +1,3 @@
-function send(msg){
-    console.log(msg);
-}
-
 Raphael("game", 1000, 400, function () {
     var r = this;
 
