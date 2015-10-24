@@ -1,8 +1,8 @@
 import os
 import json
-import sqlite3
 
 from tornado import web, ioloop, websocket
+from db import createDB
 
 import msg
 from game import Player, Game, PlayerClick
@@ -98,22 +98,6 @@ application = web.Application([
 ], **settings)
 
 port = int(os.environ.get('PORT', 8080))
-
-def createDB():
-    dbPath = os.path.join(os.path.join(os.path.dirname(__file__), "db"), 'cities.db')
-    connection = sqlite3.connect(dbPath)
-    cursorobj = connection.cursor()
-    '''
-    try:
-        cursorobj.execute(query)
-        result = cursorobj.fetchall()
-        connection.commit()
-    except Exception:
-            raise
-
-    '''
-    connection.close()
-    #return result
 
 if __name__ == '__main__':
     application.listen(port)
