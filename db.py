@@ -2,12 +2,13 @@ import os
 import csv
 import sqlite3
 
+DB_PATH = os.path.join(os.path.join(os.path.dirname(__file__), "db"), 'cities.db')
+
 def createDB():
-    db_path = os.path.join(os.path.join(os.path.dirname(__file__), "db"), 'cities.db')
     db_exists = False
-    if os.path.isfile(db_path):
+    if os.path.isfile(DB_PATH):
         db_exists = True
-    connection = sqlite3.connect(db_path)
+    connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
     if not db_exists:
         try:
@@ -25,3 +26,14 @@ def createDB():
         except Exception:
                 raise
     connection.close()
+
+def getRandomCity(index):
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT name, country, latitude, longitude FROM Cities WHERE id = {}".format(index))
+        row = cursor.fetchone()
+        connection.close()
+        return row[0], row[1], row[2], row[3]
+    except Exception:
+        raise

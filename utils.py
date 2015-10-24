@@ -1,4 +1,5 @@
 import random
+import db
 
 import game
 from math import sin, cos, sqrt, atan2, radians
@@ -8,15 +9,16 @@ def getRandom():
     return random.randint(1000000, 9999999)
 
 def generateCity():
-    return game.City("Cracov", "Poland", 100, 100)
+    name, country, x, y = db.getRandomCity(random.randint(1, 10000))
+    return game.City(name, country, x, y)
 
 def distance(x1, y1, x2, y2):
     R = 6373.0
 
-    lat1 = radians(x1)
-    lon1 = radians(y1)
-    lat2 = radians(x2)
-    lon2 = radians(y2)
+    lat1 = radians(float(x1))
+    lon1 = radians(float(y1))
+    lat2 = radians(float(x2))
+    lon2 = radians(float(y2))
 
     dlon = lon2 - lon1
     dlat = lat2 - lat1
