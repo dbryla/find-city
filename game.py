@@ -5,7 +5,6 @@ import time
 
 class Game(object):
     completed = False
-    ready_for_next_round = False
 
     def __init__(self, player1, player2):
         self.round_number = 1
@@ -15,21 +14,12 @@ class Game(object):
         self.player2 = player2
 
     def start(self):
-        if self.round_number == 10:
-            return
         self.city = generateCity()
         wait = gameWait()
         start = gameStart(self.city)
         self.sendToPlayers(wait)
         time.sleep(5)
         self.sendToPlayers(start)
-
-    def nextRound(self):
-        if self.ready_for_next_round:
-            self.ready_for_next_round = False
-            self.start()
-        else:
-            self.ready_for_next_round = True
 
     def end(self):
         if self.completed:
@@ -38,6 +28,8 @@ class Game(object):
             self.player1.click = None
             self.player2.click = None
             self.sendToPlayers(game_end_message)
+            if self.round_number <= 10:
+                self.start()
         else:
             self.completed = True
 
