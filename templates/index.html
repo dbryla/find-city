@@ -14,12 +14,10 @@
         if(socket){
               socket.onopen = function(){
                 showServerResponse("connection opened....");
-                msg = '{"id":1, "msg": "dupadupa"}';
-                socket.send(msg);
               }
 
               socket.onmessage = function(msg){
-              var obj = JSON.parse(msg.data);
+                var obj = JSON.parse(msg.data);
 
                 if(obj["id"]){
                     id = obj["id"];

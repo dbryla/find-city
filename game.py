@@ -10,7 +10,6 @@ class Game(object):
         self.player1 = player1
         self.player2 = player2
 
-    @web.asynchronous
     def start(self):
         self.city = generateCity()
         self.player1.socket.write_message(gameStart())

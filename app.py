@@ -1,8 +1,10 @@
 import os
 import json
+import msg
 from tornado import web, ioloop, websocket
 from game import Player, Game
 from utils import getRandom
+
 
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
@@ -22,9 +24,9 @@ class SocketHandler(websocket.WebSocketHandler):
         id = getRandom()
         player = Player(id, self)
         players[id] = player
-
         print 'connection opened with id =', id
-        self.write_message({"id": id})
+
+        self.write_message(msg.init(id))
 
         if len(free_players) != 0:
             # match waiting player
@@ -40,17 +42,14 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_message(self, message):
-
-        msg = json.loads(message)
+        message = json.loads(message)
         try:
-            msg["id"]
+            message["id"]
         except:
             raise web.HTTPError(400, "ERROR: No id.")
 
         for id in players:
-            players[id].socket.write_message({"msg": msg["msg"]})
-
-        print 'received:', message
+            players[id].socket.write_message(msg.send(message["msg"]))
 
     def on_close(self):
         print 'connection closed...'
