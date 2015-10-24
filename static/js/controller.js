@@ -1,5 +1,10 @@
 var timerInterval = 0;
 
+function showModal(text) {
+    $('#end-game-modal-title').text(text);
+    $('#end-game-modal').modal('show');
+}
+
 function incRound() {
     var round = $("#round");
     var roundString = round.text();

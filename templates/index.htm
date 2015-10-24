@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Raphaël · World Map</title>
+    <title>FindCities</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -24,7 +24,6 @@
     <script src="static/js/ie-emulation-modes-warning.js"></script>
 
     <!-- Custom scripts -->
-    <script src="static/js/countries.js"></script>
     <script src="static/js/raphael.js"></script>
     <script src="static/js/world.js"></script>
     <script src="static/js/map.js"></script>
@@ -75,6 +74,21 @@
                 <span id="p1-info" class="tab tab-bottom"></span>
                 <span id="round" class="tab tab-bottom"></span>
                 <span id="p2-info" class="tab tab-bottom"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="end-game-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="end-game-modal-title">You won!</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>

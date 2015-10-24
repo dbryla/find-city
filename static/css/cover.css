@@ -168,3 +168,16 @@ body {
         width: 1150px;
     }
 }
+
+.modal-content {
+    background-color: #333;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+.modal {
+    top: 50%;
+    margin-top: -90px;
+}
