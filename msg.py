@@ -1,2 +1,2 @@
 def gameStart():
-    pass
+    return "TODO"
