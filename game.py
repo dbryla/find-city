@@ -1,9 +1,10 @@
-from tornado import web
 from msg import gameStart, gameEnd
 from utils import generateCity
 
 
 class Game(object):
+
+    completed = False
 
     def __init__(self, id, player1, player2):
         self.id = id
@@ -20,8 +21,9 @@ class Game(object):
     def end(self):
         if self.completed:
             winner = self.chooseWinner()
-            self.player1.socket.write_message(gameEnd())
-            self.player2.socket.write_message(gameEnd())
+            game_end_message = gameEnd(winner)
+            self.player1.socket.write_message(game_end_message)
+            self.player2.socket.write_message(game_end_message)
             pass
         else:
             self.completed = True
@@ -38,6 +40,9 @@ class Player(object):
 
     def setPartner(self, player):
         self.partner = player
+
+    def setGame(self, game):
+        self.game = game
 
 class City(object):
     pass
