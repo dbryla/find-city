@@ -14,6 +14,8 @@ class Game(object):
         self.player1 = player1
         player2.setGame(self)
         self.player2 = player2
+        self.result1 = 0
+        self.result2 = 0
 
     def start(self):
         self.city = generateCity()
@@ -58,21 +60,25 @@ class Game(object):
                 return {}
             elif self.player2.click:
                 player2, dist2 = self.returnPlayerData(self.player2)
+                point2 = 10000 / dist2
+                self.result2 = self.result2 +  point2
                 return {"players":
                     [
-                        {"id": self.player1.id, "win": False, "point": 0},
-                        {"id": self.player2.id, "win": True, "dist": dist2, "point": 10000 / dist2,
-                         "click": player2}
+                        {"id": self.player1.id, "win": False, "point": 0, "result": self.result1},
+                        {"id": self.player2.id, "win": True, "dist": dist2, "point": point2,
+                         "click": player2, "result": self.result2}
                     ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }
             else:
                 player1, dist1 = self.returnPlayerData(self.player1)
+                point1 = 10000 / dist1
+                self.result1 = self.result1 +  point1
                 return {"players":
                     [
-                        {"id": self.player1.id, "win": True, "dist": dist1, "point": 10000 / dist1,
-                         "click": player1},
-                        {"id": self.player2.id, "win": False, "point": 0},
+                        {"id": self.player1.id, "win": True, "dist": dist1, "point": point1,
+                         "click": player1, "result": self.result2},
+                        {"id": self.player2.id, "win": False, "point": 0, "result": self.result2},
                     ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }
@@ -82,12 +88,17 @@ class Game(object):
             result1 = dist1 + player1["time"]
             result2 = dist2 + player2["time"]
 
+            point1 = 10000 / dist1
+            self.result1 = self.result1 +  point1
+            point2 = 10000 / dist2
+            self.result2 = self.result2 +  point2
+
         return {"players":
             [
-                {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1,
-                 "click": player1},
-                {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2,
-                 "click": player2}
+                {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": point1,
+                 "click": player1, "result": self.result1},
+                {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": point2,
+                 "click": player2, "result": self.result2}
             ],
             "location": {"x": self.city.x, "y": self.city.y}
         }
