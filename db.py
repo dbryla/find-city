@@ -19,6 +19,9 @@ def createDB():
                                                 "name VARCHAR(255), "
                                                 "latitude VARCHAR(255), "
                                                 "longitude VARCHAR(255))")
+            cursor.execute("CREATE TABLE Rank (id INTEGER PRIMARY KEY, "
+                                                "name VARCHAR(255), "
+                                                "points VARCHAR(255))")
             with open(os.path.join(os.path.join(os.path.dirname(__file__), "db"), '10000.txt'), 'rb') as csvfile:
                 cities = csv.reader(csvfile)
                 query = 'INSERT INTO Cities (country, name, latitude, longitude) VALUES (\"{}\", \"{}\", \"{}\", \"{}\")'
