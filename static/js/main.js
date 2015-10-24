@@ -11,11 +11,12 @@ function initGame() {
     setGameScene();
     setPlayerScore(0);
     setOpponentScore(0);
-    setRound(1, 10);
+    setRound(0, 10);
     hideInfo();
 }
 
 function init() {
+    loadMap();
     $("#play-btn").click(function () {
         initGame();
         initSocket(false);

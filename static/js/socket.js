@@ -28,7 +28,6 @@ function initSocket(friend) {
             /*  action:  start - miasto
              | end
              */
-            console.log(msg);
 
             switch (obj["action"]) {
                 case "init":
@@ -41,25 +40,24 @@ function initSocket(friend) {
                     break;
                 case "start":
                     ask_question(obj["msg"]["country"], obj["msg"]["name"]);
+                    incRound();
+                    toggleClick();
                     break;
                 case "end":
                     if (obj["msg"]["players"][0]["id"] == id) {
                         player = obj["msg"]["players"][0];
-                        oponent = obj["msg"]["players"][1];
+                        opponent = obj["msg"]["players"][1];
                     } else {
                         player = obj["msg"]["players"][1];
-                        oponent = obj["msg"]["players"][0];
+                        opponent = obj["msg"]["players"][0];
                     }
                     setPlayerInfo(parseInt(player["dist"]), parseInt(player["point"]));
-                    setOpponentInfo(parseInt(oponent["dist"]), parseInt(oponent["point"]));
+                    setOpponentInfo(parseInt(opponent["dist"]), parseInt(opponent["point"]));
+                    setPlayerScore(parseInt(player["result"]));
+                    setOpponentScore(parseInt(opponent["result"]));
 
-                    showCorrectLocation(obj["msg"]["location"], oponent["click"]);
+                    showCorrectLocation(obj["msg"]["location"], opponent["click"]);
 
-                    if (player["win"]) {
-                        showModal("Wygalem!");
-                    } else {
-                        showModal("Przegralem");
-                    }
                     break;
                 case "wait":
                     closeWaitingModal();
