@@ -56,25 +56,34 @@
             </div>
             <div id="game-wrapper" class="inner cover">
                 <!-- top tabs -->
-                <span id="player-score" class="tab tab-top"></span>
+                <span class="tab tab-top">Your score: <span id="player-score" class="bold"></span></span>
                     <span id="question" class="tab tab-top">
-                        <span id="city"></span>
+                        <span id="city" class="bold"></span>
                         <img id="flag" src="">
                         <span id="country"></span>
                     </span>
                     <span id="timer" class="tab tab-top">
                         <span id="timer-text"></span>
-                        <span id="timer-value"></span>
+                        <span id="timer-value" class="bold"></span>
                     </span>
-                <span id="opponent-score" class="tab tab-top"></span>
+                <span class="tab tab-top">Opponent's score: <span id="opponent-score" class="bold"></span></span>
 
                 <!-- game -->
                 <div id="game"></div>
 
                 <!-- bottom tabs -->
-                <span id="p1-info" class="tab tab-bottom"></span>
-                <span id="round" class="tab tab-bottom"></span>
-                <span id="p2-info" class="tab tab-bottom"></span>
+                <span id="p1-info" class="tab tab-bottom">
+                    You were off by <span class="distance bold"></span>km
+                    and scored <span class="score bold"></span>p
+                </span>
+                <span id="round" class="tab tab-bottom">
+                    Round <span class="value bold">1</span>/
+                    <span class="total">10</span>
+                </span>
+                <span id="p2-info" class="tab tab-bottom">
+                    Your opponent was off by <span class="distance bold"></span>km
+                    and scored <span class="score bold"></span>p
+                </span>
             </div>
         </div>
     </div>
