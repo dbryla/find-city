@@ -1,6 +1,6 @@
-from msg import gameStart, gameEnd
+from msg import gameStart, gameEnd, gameWait
 from utils import generateCity, distance
-
+import time
 
 class Game(object):
 
@@ -14,15 +14,16 @@ class Game(object):
 
     def start(self):
         self.city = generateCity()
+        wait = gameWait()
         start = gameStart(self.city)
-        self.player1.socket.write_message(start)
-        self.player2.socket.write_message(start)
+        self.sendToPlayers(wait)
+        time.sleep(5)
+        self.sendToPlayers(start)
 
     def end(self):
         if self.completed:
             game_end_message = gameEnd(self.chooseWinner())
-            self.player1.socket.write_message(game_end_message)
-            self.player2.socket.write_message(game_end_message)
+            self.sendToPlayers(game_end_message)
         else:
             self.completed = True
 
@@ -30,13 +31,20 @@ class Game(object):
         dist1 = distance(self.player1.click.x, self.player1.click.y, self.city.x, self.city.y)
         dist2 = distance(self.player2.click.x, self.player2.click.y, self.city.x, self.city.y)
 
-        print "player1 dist", dist1, self.player1.id
-        print "player2 dist", dist2, self.player2.id
+        time1 = self.player1.click.time
+        time2 = self.player2.click.time
 
-        if dist1 < dist2:
-            return self.player1.id
+        result1 = dist1 + time1
+        result2 = dist2 + time2
+
+        if result1 < result2:
+            return str({"winner_id": self.player1.id, "looser_id": self.player2.id, "distance_winner": dist1, "distance_looser": dist2, "time_winner": time1, "time_looser": time2})
         else:
-            return self.player2.id
+            return str({"winner_id": self.player2.id, "looser_id": self.player1.id, "distance_winner": dist2, "distance_looser": dist1, "time_winner": time2, "time_looser": time1})
+
+    def sendToPlayers(self, txt):
+        self.player1.socket.write_message(txt)
+        self.player2.socket.write_message(txt)
 
 
 
