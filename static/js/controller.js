@@ -1,5 +1,18 @@
 var timerInterval = 0;
 
+function closeWaitingModal() {
+    $('#waiting-modal').modal('hide');
+}
+
+function showWaitingModal() {
+    var modal = $('#waiting-modal');
+    modal.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    modal.modal('show');
+}
+
 function showModal(text) {
     $('#end-game-modal-title').text(text);
     $('#end-game-modal').modal('show');

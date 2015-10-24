@@ -52,6 +52,7 @@ function initSocket() {
                     }
                     break;
                 case "wait":
+                    closeWaitingModal();
                     startTimer(5, "Game starts in: ");
                     break;
 

@@ -15,7 +15,7 @@ function init() {
         setRound(1, 10);
         initSocket();
         hideInfo();
-        showModal("Waiting for the opponent...");
+        showWaitingModal();
     });
 }
 
