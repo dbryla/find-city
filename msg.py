@@ -12,3 +12,6 @@ def init(id):
 
 def send(msg):
     return {"action": "msg", "msg": msg}
+
+def noFriend():
+    return {"action": "error", "msg": "This ID doesnt exist."}
