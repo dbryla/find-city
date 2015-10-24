@@ -1,8 +1,11 @@
 import os
 import json
-import msg
+import sqlite3
+
 from tornado import web, ioloop, websocket
-from game import Player, Game
+
+import msg
+from game import Player, Game, PlayerClick
 from utils import getRandom
 
 settings = {
@@ -21,15 +24,6 @@ ID = 'id'
 X = 'x'
 Y = 'y'
 TIME = 'time'
-
-
-class PlayerClick(object):
-
-    def __init__(self, x, y, time):
-        self.x = x
-        self.y = y
-        self.time = time
-
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -79,6 +73,23 @@ application = web.Application([
 
 port = int(os.environ.get('PORT', 8080))
 
+def createDB():
+    dbPath = os.path.join(os.path.join(os.path.dirname(__file__), "db"), 'cities.db')
+    connection = sqlite3.connect(dbPath)
+    cursorobj = connection.cursor()
+    '''
+    try:
+        cursorobj.execute(query)
+        result = cursorobj.fetchall()
+        connection.commit()
+    except Exception:
+            raise
+
+    '''
+    connection.close()
+    #return result
+
 if __name__ == '__main__':
     application.listen(port)
+    createDB()
     ioloop.IOLoop.instance().start()

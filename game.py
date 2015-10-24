@@ -56,6 +56,13 @@ class Player(object):
         self.click = click
         self.game.end()
 
+class PlayerClick(object):
+
+    def __init__(self, x, y, time):
+        self.x = x
+        self.y = y
+        self.time = time
+
 class City(object):
 
     def __init__(self, name, country, x, y):

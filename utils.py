@@ -1,6 +1,8 @@
 import random
+
 import game
 from math import sin, cos, sqrt, atan2, radians
+
 
 def getRandom():
     return random.randint(1000000, 9999999)
