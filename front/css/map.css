@@ -50,3 +50,24 @@ body {
 #cities a {
     color: #ccf;
 }
+
+#map svg {
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+#map svg rect {
+    opacity: 1;
+    fill-opacity: 1;
+}
+
+#map svg circle {
+    opacity: 1;
+    fill-opacity: 1;
+}
+
+#map svg path {
+    stroke-opacity: 0.25;
+}
