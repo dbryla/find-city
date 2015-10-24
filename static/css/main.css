@@ -2,6 +2,11 @@
     display: none;
     text-align: center;
     margin-top: 30px;
+    /*-webkit-transform: scale(0.9, 0.8);*/
+    /*-moz-transform: scale(0.9, 0.8);*/
+    /*-ms-transform: scale(0.9, 0.8);*/
+    /*-o-transform: scale(0.9, 0.8);*/
+    /*transform: scale(0.9, 0.8);*/
 }
 
 #game {
@@ -17,9 +22,9 @@
 .tab {
     border: 1px solid #e3e3e3;
     padding: 20px;
-    font-size: 16px;
+    font-size: 12px;
     border-radius: 5px;
-    margin-left: 20px;
+    margin-left: 10px;
     display: none;
 }
 

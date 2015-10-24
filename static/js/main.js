@@ -85,7 +85,7 @@ function initSocket(){
 function init() {
     $("#play-btn").click(function () {
         setGameScene();
-        ask_question("de", "Berlin");
+        ask_question("mk", "Thiruvananthapuram");
         startTimer(5, "Next country in: ");
         setPlayerScore(12120);
         setOpponentScore(424);
@@ -100,5 +100,5 @@ function init() {
 
 $(document).ready(function () {
     init();
-    //$("#play-btn").click();  //for debugging purpose only
+    $("#play-btn").click();  //for debugging purpose only
 });
