@@ -72,10 +72,15 @@ class SocketHandler(websocket.WebSocketHandler):
 
 class FriendHandler(websocket.WebSocketHandler):
 
+    @gen.coroutine
     def open(self):
         id = getRandom()
         self.player = Player(id, self)
         players[id] = self.player
+        sockets[self] = id
+
+        print 'connection opened with id =', id
+
         self.write_message(msg.init(id))
 
     def on_message(self, message):
@@ -85,14 +90,31 @@ class FriendHandler(websocket.WebSocketHandler):
         except:
             raise web.HTTPError(400, "ERROR: No id.")
 
-        print players
         if message[ACTION_FIELD] == 'friend':
-            Game(self.player, players[message[MSG]]).start()
-
+            if message[MSG] in players:
+                Game(self.player, players[message[MSG]]).start()
+            else:
+                self.write_message(msg.noFriend())
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
 
     def on_close(self):
+        id = sockets[self]
+
+        if players[id] in free_players:
+            free_players.remove(players[id])
+
+        if players[id].game:
+            players[sockets[self]].game.rageQuit(sockets[self])
+
+            player1 = players[id].game.player1
+            player2 = players[id].game.player2
+
+            del sockets[player1.socket]
+            del sockets[player2.socket]
+            del players[player1.id]
+            del players[player2.id]
+
         print 'connection closed...'
 
 class IndexHandler(web.RequestHandler):
