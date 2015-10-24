@@ -29,6 +29,8 @@
     <script src="static/js/map.js"></script>
     <script src="static/js/controller.js"></script>
     <script src="static/js/socket.js"></script>
+    <script src="static/js/rank.js"></script>
+    <script src="static/js/scenes.js"></script>
     <script src="static/js/main.js"></script>
 </head>
 <body>
@@ -40,9 +42,9 @@
                     <h3 class="masthead-brand">FindCity</h3>
                     <nav>
                         <ul class="nav masthead-nav">
-                            <li class="active"><a href="index.htm">Home</a></li>
-                            <li><a href="#">Ranking</a></li>
-                            <li><a href="#">About</a></li>
+                            <li id="home-li" class="active"><a href="#">Home</a></li>
+                            <li id="rank-li"><a href="#">Ranking</a></li>
+                            <li id="about-li"><a href="#">About</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -56,6 +58,9 @@
                     <a id="play-btn" class="btn btn-lg btn-primary">Quick Play</a>
                     <a id="play-friend-btn" class="btn btn-lg btn-default">Play with a friend</a>
                 </p>
+            </div>
+            <div id="rank" class="inner cover">
+                <table id="rank-table" class="table table-striped"></table>
             </div>
             <div id="game-wrapper" class="inner cover">
                 <!-- top tabs -->
@@ -102,6 +107,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">New record!</h4>
+
                 <form class="form-inline">
                     <div class="form-group">
                         <input class="form-control" id="record-name" placeholder="Your name" type="text">
@@ -141,7 +147,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Your id is <span id="id" class="bold"></span></h4>
+
                 <p>(Wait or enter your friend's id below)</p>
+
                 <form class="form-inline">
                     <div class="form-group">
                         <input class="form-control" id="friend-id" placeholder="Your friend's id" type="text">

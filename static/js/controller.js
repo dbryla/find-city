@@ -127,15 +127,3 @@ function askQuestion(country_code, city) {
 function hideQuestion() {
     $("#question").hide();
 }
-
-function setGameScene() {
-    $("#welcome").hide();
-    $("#header").hide();
-    $("#game-wrapper").show();
-}
-
-function setWelcomeScene() {
-    $("#welcome").show();
-    $("#header").show();
-    $("#game-wrapper").hide();
-}

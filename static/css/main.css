@@ -2,11 +2,6 @@
     display: none;
     text-align: center;
     margin-top: 30px;
-    /*-webkit-transform: scale(0.9, 0.8);*/
-    /*-moz-transform: scale(0.9, 0.8);*/
-    /*-ms-transform: scale(0.9, 0.8);*/
-    /*-o-transform: scale(0.9, 0.8);*/
-    /*transform: scale(0.9, 0.8);*/
 }
 
 #game {
@@ -47,4 +42,17 @@
 
 .no-border {
     border: none;
+}
+
+.table {
+    font-size: 16px;
+    margin-top: 100px;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+    position: relative;
+}
+
+#rank {
+    display: none;
 }

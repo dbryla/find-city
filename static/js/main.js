@@ -32,6 +32,16 @@ function init() {
         hideRestartButton();
         setWelcomeScene();
     });
+
+    $("#home-li").click(function () {
+        setWelcomeScene();
+    });
+    $("#rank-li").click(function () {
+        setRankScene();
+    });
+    $("#about-li").click(function () {
+        setAboutScene();
+    });
 }
 
 $(document).ready(function () {

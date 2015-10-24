@@ -181,3 +181,7 @@ body {
     top: 50%;
     margin-top: -90px;
 }
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #454545;
+}
