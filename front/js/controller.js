@@ -1,5 +1,22 @@
 var timerInterval = 0;
 
+function incRound() {
+    var round = $("#round");
+    var roundString = round.text();
+    var roundNumbersString = roundString.split(" ")[1];
+    var roundNumbers = roundNumbersString.split("/");
+    var value = parseInt(roundNumbers[0]) + 1;
+    var totalRounds = roundNumbers[1];
+    round.text("Round " + value + "/" + totalRounds);
+}
+
+function setRound(value, totalRounds) {
+    totalRounds = totalRounds || 10;
+    var round = $("#round");
+    round.show();
+    round.text("Round " + value + "/" + totalRounds);
+}
+
 function hideInfo() {
     $("#p1-info").hide();
     $("#p2-info").hide();
@@ -8,13 +25,13 @@ function hideInfo() {
 function setPlayerInfo(distance, score) {
     var p1Info = $("#p1-info");
     p1Info.show();
-    p1Info.text("You were off by " + distance + "km and scored " + score + " points");
+    p1Info.text("You were off by " + distance + "km and scored " + score + "p");
 }
 
 function setOpponentInfo(distance, score) {
     var p2Info = $("#p2-info");
     p2Info.show();
-    p2Info.text("Your opponent was off by " + distance + "km and scored " + score + " points");
+    p2Info.text("Your opponent was off by " + distance + "km and scored " + score + "p");
 }
 
 function setPlayerScore(value) {

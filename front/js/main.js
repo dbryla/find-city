@@ -16,6 +16,8 @@ function init() {
         setOpponentScore(424);
         setPlayerInfo(1238, 123);
         setOpponentInfo(8567, 41);
+        setRound(1, 10);
+        incRound();
         //hideInfo();
     });
 }
