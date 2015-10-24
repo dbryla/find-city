@@ -56,7 +56,5 @@ function init() {
 }
 
 $(document).ready(function () {
-    console.log(Object.keys(worldmap.names));
     loadFlags(Object.keys(worldmap.names));
-    //init();
 });

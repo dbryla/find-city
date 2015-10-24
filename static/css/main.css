@@ -56,3 +56,11 @@
 #rank {
     display: none;
 }
+
+#p1-info {
+    border: 3px solid #FE7727;
+}
+
+#p2-info {
+    border: 3px solid #4263AF;
+}
