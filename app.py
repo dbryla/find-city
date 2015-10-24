@@ -24,6 +24,7 @@ ID = 'id'
 X = 'x'
 Y = 'y'
 TIME = 'time'
+MSG = 'msg'
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -59,6 +60,33 @@ class SocketHandler(websocket.WebSocketHandler):
     def on_close(self):
         print 'connection closed...'
 
+class FriendHandler(websocket.WebSocketHandler):
+
+    def open(self):
+        id = getRandom()
+        self.player = Player(id, self)
+        players[id] = self.player
+        print 'connection opened with id =', id
+
+        self.write_message(msg.init(id))
+
+
+    def on_message(self, message):
+        message = json.loads(message)
+        try:
+            message[ID]
+        except:
+            raise web.HTTPError(400, "ERROR: No id.")
+
+        if message[ACTION_FIELD] == 'friend':
+            Game(self.player.id, players[message[MSG]]).start()
+
+        if message[ACTION_FIELD] == PLAY_ACTION:
+            players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
+
+
+    def on_close(self):
+        print 'connection closed...'
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -68,7 +96,8 @@ class IndexHandler(web.RequestHandler):
 application = web.Application([
     (r'/', IndexHandler),
     (r'/index', IndexHandler),
-    (r'/socket', SocketHandler)
+    (r'/socket', SocketHandler),
+    (r'/friend', FriendHandler)
 ], **settings)
 
 port = int(os.environ.get('PORT', 8080))
