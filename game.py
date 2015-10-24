@@ -50,6 +50,7 @@ class Game(object):
 
     def chooseWinner(self):
         if self.timeout:
+            print 'timeout occurs'
             if not self.player1.click and not self.player2.click:
                 return {}
             elif self.player2.click:
