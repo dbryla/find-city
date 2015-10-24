@@ -42,19 +42,22 @@ class Game(object):
             self.completed = True
 
     def chooseWinner(self):
-        dist1 = distance(self.player1.click.x, self.player1.click.y, self.city.x, self.city.y)
-        dist2 = distance(self.player2.click.x, self.player2.click.y, self.city.x, self.city.y)
+        player1 = {"x": self.player1.click.x, "y": self.player1.click.y, "time": self.player1.click.time}
+        player2 = {"x": self.player2.click.x, "y": self.player2.click.y, "time": self.player2.click.time}
 
-        time1 = self.player1.click.time
-        time2 = self.player2.click.time
+        dist1 = distance(player1["x"], player1["y"], self.city.x, self.city.y)
+        dist2 = distance(player2["x"], player2["y"], self.city.x, self.city.y)
 
-        result1 = dist1 + time1
-        result2 = dist2 + time2
+        result1 = dist1 + player1["time"]
+        result2 = dist2 + player2["time"]
 
-        return [
-            {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1},
-            {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2}
-        ]
+        return {    "players": 
+                        [
+                            {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1, "click": player1 },
+                            {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2, "click": player2 }
+                        ],
+                    "location": {"x": self.city.x, "y": self.city.y}
+                }
 
     def rageQuit(self, id):
         if id != self.player1.id:

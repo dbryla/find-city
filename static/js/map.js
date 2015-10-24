@@ -1,3 +1,4 @@
+var showCorrectLocation;
 Raphael("game", 1000, 400, function () {
     var r = this;
 
@@ -24,7 +25,10 @@ Raphael("game", 1000, 400, function () {
         clickMap(getLatLon(event.layerX, event.layerY));
     });
 
+    var dotOponent  = r.circle().attr({fill: "r#91E547:50-#51AC00:100", stroke: "#000e", "stroke-width": 2, r: 0});
+    var dotLocation = r.circle().attr({fill: "r#4263AF:50-#082D81:100", stroke: "#000e", "stroke-width": 2, r: 0});
     var dot = r.circle().attr({fill: "r#FE7727:50-#F57124:100", stroke: "#fff", "stroke-width": 2, r: 0});
+
     function clickMap(oLatLon){
         attr = getXY(oLatLon.lat, oLatLon.lon);
         attr.r = 0;
@@ -44,4 +48,15 @@ Raphael("game", 1000, 400, function () {
             lon: (x - 465.4) / 2.6938
         };
     };
+
+    showCorrectLocation = function(realPos, oponentPos){
+        attr = getXY(realPos.x, realPos.y);
+        attr.r = 0;
+        dotLocation.stop().attr(attr).animate({r: 8}, 1000, "elastic");
+        
+        attr = getXY(oponentPos.x, oponentPos.y);
+        attr.r = 0;
+        dotOponent.stop().attr(attr).animate({r: 5}, 1000, "elastic");
+        
+    }
 });

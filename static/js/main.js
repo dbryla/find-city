@@ -31,6 +31,7 @@ function initSocket(){
                 /*  action:  start - miasto
                            | end   
                 */
+                console.log(msg);
 
                 switch(obj["action"]){
                     case "init":
@@ -40,20 +41,22 @@ function initSocket(){
                         ask_question(obj["msg"]["country"], obj["msg"]["name"]);
                         break;
                     case "end":
-                        if(obj["msg"][0]["id"] == id){
-                            player = obj["msg"][0];
-                            oponent = obj["msg"][1];
+                        if(obj["msg"]["players"][0]["id"] == id){
+                            player = obj["msg"]["players"][0];
+                            oponent = obj["msg"]["players"][1];
                         } else {
-                            player = obj["msg"][1];
-                            oponent = obj["msg"][0];
+                            player = obj["msg"]["players"][1];
+                            oponent = obj["msg"]["players"][0];
                         }
                         setPlayerInfo(parseInt(player["dist"]), parseInt(player["point"]));
                         setOpponentInfo(parseInt(oponent["dist"]), parseInt(oponent["point"]));
 
+                        showCorrectLocation(obj["msg"]["location"], oponent["click"]);
+
                         if(player["win"]){
-                            alert("Wygalem!");
+                            showModal("Wygalem!");
                         } else {
-                            alert("Przegralem");
+                            showModal("Przegralem");
                         }
                         break;
                     case "wait":
