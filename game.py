@@ -1,5 +1,5 @@
 from msg import gameStart, gameEnd
-from utils import generateCity
+from utils import generateCity, distance
 
 
 class Game(object):
@@ -27,7 +27,16 @@ class Game(object):
             self.completed = True
 
     def chooseWinner(self):
-        return "TODO: chooseWinner"
+        dist1 = distance(self.player1.click.x, self.player1.click.y, self.city.x, self.city.y)
+        dist2 = distance(self.player2.click.x, self.player2.click.y, self.city.x, self.city.y)
+
+        print "player1 dist", dist1, self.player1.id
+        print "player2 dist", dist2, self.player2.id
+
+        if dist1 < dist2:
+            return self.player1.id
+        else:
+            return self.player2.id
 
 
 

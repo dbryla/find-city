@@ -13,7 +13,9 @@
         var id;
 
         $( "#target" ).click(function() {
-            var wiad = '{"action": "play", "x": 100, "y": 100, "time": 100, "id": '+id+'}';
+            var x = id/1000;
+            var y = id/1000;
+            var wiad = '{"action": "play", "x": '+x+', "y": '+y+', "time": 100, "id": '+id+'}';
             socket.send(wiad);
         });
         if(socket){

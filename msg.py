@@ -1,5 +1,5 @@
 def gameStart(city):
-    return {"action": "start", "msg": city}
+    return {"action": "start", "msg": str(city)}
 
 def gameEnd(winner):
     return {"action": "end", "msg": winner}
