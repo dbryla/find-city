@@ -5,12 +5,17 @@
 </head>
 <body>
 <div id="output"></div>
+<input type="button" id="target">
 <script>
     jQuery(function($){
         var host = "ws://localhost:8080/socket";
         var socket = new WebSocket(host);
         var id;
 
+        $( "#target" ).click(function() {
+            var wiad = '{"action": "play", "x": 100, "y": 100, "time": 100, "id": '+id+'}';
+            socket.send(wiad);
+        });
         if(socket){
               socket.onopen = function(){
                 showServerResponse("connection opened....");
@@ -19,8 +24,8 @@
               socket.onmessage = function(msg){
                 var obj = JSON.parse(msg.data);
 
-                if(obj["id"]){
-                    id = obj["id"];
+                if(obj["action"] == "init"){
+                    id = obj["msg"];
                     showServerResponse(id);
                 }
                 else{
@@ -42,6 +47,7 @@
                 document.getElementById('output').appendChild(p);
             }
     });
+
 
 
 

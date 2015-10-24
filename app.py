@@ -61,8 +61,6 @@ class SocketHandler(websocket.WebSocketHandler):
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
 
-        for id in players:
-            players[id].socket.write_message(msg.send(message["msg"]))
 
     def on_close(self):
         print 'connection closed...'

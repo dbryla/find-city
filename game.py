@@ -27,7 +27,8 @@ class Game(object):
             self.completed = True
 
     def chooseWinner(self):
-        "TODO: chooseWinner"
+        return "TODO: chooseWinner"
+
 
 
 class Player(object):
