@@ -22,16 +22,19 @@ class Game(object):
         self.sendToPlayers(wait)
         time.sleep(5)
         self.sendToPlayers(start)
-        Timer(15.0, self.timeoutFunction).start()
+        self.timer = Timer(15.0, self.timeoutFunction)
+        self.timer.start()
 
     def timeoutFunction(self):
         if self.timeout:
             self.end(True)
-        self.timeout = True
 
     def end(self, timed = False):
         if self.completed:
+            self.completed = False
             self.timeout = False
+            self.timer.cancel()
+            self.timeout = True
             game_end_message = gameEnd(self.chooseWinner(timed))
             self.round_number += 1
             self.player1.click = None
