@@ -1,5 +1,5 @@
-def gameStart():
-    return "TODO"
+def gameStart(city):
+    return {"action": "start", "msg": city}
 
 def gameEnd():
     return "TODO"

@@ -15,8 +15,9 @@ class Game(object):
 
     def start(self):
         self.city = generateCity()
-        self.player1.socket.write_message(gameStart())
-        self.player2.socket.write_message(gameStart())
+        start = gameStart(self.city)
+        self.player1.socket.write_message(start)
+        self.player2.socket.write_message(start)
 
     def end(self):
         if self.completed:
