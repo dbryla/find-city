@@ -43,3 +43,19 @@ def getRandomCity(index):
         return row[0], row[1], row[2], row[3]
     except Exception:
         raise
+
+def isNewRecord(result):
+    connection = sqlite3.connect(DB_PATH)
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT name, points FROM Rank WHERE points > {}".format(result))
+        rows = cursor.fetchall()
+        connection.close()
+        if len(rows) < 10:
+            return True
+        return False
+    except Exception:
+        raise
+
+def saveRecord(name, record):
+    pass

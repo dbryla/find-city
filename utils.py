@@ -1,7 +1,7 @@
 import random
 import db
 
-import game
+import player
 from math import sin, cos, sqrt, atan2, radians
 
 
@@ -10,7 +10,7 @@ def getRandom():
 
 def generateCity():
     name, country, x, y = db.getRandomCity(random.randint(1, 10000))
-    return game.City(name, country, x, y)
+    return player.City(name, country, x, y)
 
 def distance(x1, y1, x2, y2):
     R = 6373.0
@@ -29,3 +29,6 @@ def distance(x1, y1, x2, y2):
     distance = R * c
 
     return distance
+
+def calculatePoints(dist):
+    return 10000 / dist

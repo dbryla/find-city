@@ -1,6 +1,7 @@
 from threading import Timer
+import db
 from msg import gameStart, gameEnd, gameWait
-from utils import generateCity, distance
+from utils import generateCity, distance, calculatePoints
 import time
 
 
@@ -18,6 +19,7 @@ class Game(object):
         self.result2 = 0
 
     def start(self):
+        print 'game start'
         self.city = generateCity()
         wait = gameWait()
         start = gameStart(self.city)
@@ -31,7 +33,7 @@ class Game(object):
         if self.timeout:
             self.end(True)
 
-    def end(self, timed = False):
+    def end(self, timed=False):
         if self.completed:
             self.completed = False
             self.timeout = False
@@ -53,32 +55,47 @@ class Game(object):
         return ({"x": player_x, "y": player_y, "time": player.click.time},
                 distance(player_x, player_y, self.city.x, self.city.y))
 
-    def chooseWinner(self, timed = False):
+    def checkRecords(self):
+        newRecords = [False, False]
+        if self.round_number == 10:
+            if db.isNewRecord(self.result1):
+                self.player1.setRecord(self.result1)
+                newRecords[0] = True
+            elif self.round_number == 10 and db.isNewRecord(self.result2):
+                self.player2.setRecord(self.result2)
+                newRecords[1] = True
+        return newRecords
+
+    def chooseWinner(self, timed=False):
         if timed:
             print 'timeout occurs'
             if not self.player1.click and not self.player2.click:
                 return {}
             elif self.player2.click:
                 player2, dist2 = self.returnPlayerData(self.player2)
-                point2 = 10000 / dist2
-                self.result2 = self.result2 +  point2
+                point2 = calculatePoints(dist2)
+                self.result2 += point2
+                newRecords = self.checkRecords()
                 return {"players":
                     [
-                        {"id": self.player1.id, "win": False, "point": 0, "result": self.result1},
+                        {"id": self.player1.id, "win": False, "point": 0, "result": self.result1,
+                         "record": newRecords[0]},
                         {"id": self.player2.id, "win": True, "dist": dist2, "point": point2,
-                         "click": player2, "result": self.result2}
+                         "click": player2, "result": self.result2, "record": newRecords[1]}
                     ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }
             else:
                 player1, dist1 = self.returnPlayerData(self.player1)
-                point1 = 10000 / dist1
-                self.result1 = self.result1 +  point1
+                point1 = calculatePoints(dist1)
+                self.result1 += point1
+                newRecords = self.checkRecords()
                 return {"players":
                     [
                         {"id": self.player1.id, "win": True, "dist": dist1, "point": point1,
-                         "click": player1, "result": self.result2},
-                        {"id": self.player2.id, "win": False, "point": 0, "result": self.result2},
+                         "click": player1, "result": self.result1, "record": newRecords[0]},
+                        {"id": self.player2.id, "win": False, "point": 0, "result": self.result2,
+                         "record": newRecords[1]},
                     ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }
@@ -88,17 +105,17 @@ class Game(object):
             result1 = dist1 + player1["time"]
             result2 = dist2 + player2["time"]
 
-            point1 = 10000 / dist1
-            self.result1 = self.result1 +  point1
-            point2 = 10000 / dist2
-            self.result2 = self.result2 +  point2
-
+            point1 = calculatePoints(dist1)
+            self.result1 += point1
+            point2 = calculatePoints(dist2)
+            self.result2 += point2
+            newRecords = self.checkRecords()
         return {"players":
             [
                 {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": point1,
-                 "click": player1, "result": self.result1},
+                 "click": player1, "result": self.result1, "record": newRecords[0]},
                 {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": point2,
-                 "click": player2, "result": self.result2}
+                 "click": player2, "result": self.result2, "record": newRecords[1]}
             ],
             "location": {"x": self.city.x, "y": self.city.y}
         }
@@ -114,38 +131,4 @@ class Game(object):
         self.player2.socket.write_message(txt)
 
 
-class Player(object):
-    def __init__(self, id, socket):
-        self.id = id
-        self.socket = socket
-        self.click = None
-        self.game = None
 
-    def setPartner(self, player):
-        self.partner = player
-
-    def setGame(self, game):
-        self.game = game
-
-    def endGame(self, click):
-        if not self.click:
-            self.click = click
-            self.game.end()
-
-
-class PlayerClick(object):
-    def __init__(self, x, y, time):
-        self.x = x
-        self.y = y
-        self.time = time
-
-
-class City(object):
-    def __init__(self, name, country, x, y):
-        self.name = name
-        self.country = country
-        self.x = x
-        self.y = y
-
-    def __str__(self):
-        return str({"name": self.name, "country": self.country, "x": self.x, "y": self.y})
