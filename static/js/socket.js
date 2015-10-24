@@ -53,7 +53,11 @@ function initSocket(friend) {
                         opponent = obj["msg"]["players"][0];
                     }
                     setPlayerInfo(parseInt(player["dist"]), parseInt(player["point"]));
-                    setOpponentInfo(parseInt(opponent["dist"]), parseInt(opponent["point"]));
+                    if (opponent.hasOwnProperty("dist")) {
+                        setOpponentInfo(parseInt(opponent["dist"]), parseInt(opponent["point"]));
+                    } else {
+                        setOpponentTimeoutInfo();
+                    }
                     setPlayerScore(parseInt(player["result"]));
                     setOpponentScore(parseInt(opponent["result"]));
 
@@ -79,6 +83,11 @@ function initSocket(friend) {
                     } else {
                         startTimer(5, "Next round in:");
                     }
+                    break;
+                case "error":
+                    break;
+                case "quit":
+                    showModal("You win! Your opponent has quit.");
                     break;
 
                 default:

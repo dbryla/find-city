@@ -87,6 +87,9 @@
                     Your opponent was off by <span class="distance bold"></span>km
                     and scored <span class="score bold"></span>p
                 </span>
+                <span id="opp-timeout" class="tab tab-bottom">
+                    Your opponent didn't response in time.
+                </span>
             </div>
         </div>
     </div>
@@ -98,7 +101,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="end-game-modal-title">You won!</h4>
+                <h4 class="modal-title" id="end-game-modal-title"></h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -121,7 +124,6 @@
             <div class="modal-header">
                 <h4 class="modal-title">Your id is <span id="id" class="bold"></span></h4>
                 <p>(Wait or enter your friend's id below)</p>
-
                 <form class="form-inline">
                     <div class="form-group">
                         <input class="form-control" id="friend-id" placeholder="Your friend's id" type="text">

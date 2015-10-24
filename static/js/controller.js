@@ -58,8 +58,14 @@ function setPlayerInfo(distance, score) {
 function setOpponentInfo(distance, score) {
     var p2Info = $("#p2-info");
     p2Info.show();
+    $("#opp-timeout").hide();
     p2Info.find(".distance").text(distance);
     p2Info.find(".score").text(score);
+}
+
+function setOpponentTimeoutInfo() {
+    $("#p2-info").hide();
+    $("#opp-timeout").show();
 }
 
 function setPlayerScore(value) {
