@@ -2,7 +2,7 @@ function send(msg){
     console.log(msg);
 }
 
-Raphael(10, 10, 1000, 400, function () {
+Raphael("game", 1000, 400, function () {
     var r = this;
 
     //Draw water
