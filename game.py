@@ -65,7 +65,7 @@ class Game(object):
             if db.isNewRecord(self.result1):
                 self.player1.setRecord(self.result1)
                 newRecords[0] = True
-            if self.round_number == 10 and db.isNewRecord(self.result2):
+            if db.isNewRecord(self.result2):
                 self.player2.setRecord(self.result2)
                 newRecords[1] = True
         return newRecords

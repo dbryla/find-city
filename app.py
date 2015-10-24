@@ -2,8 +2,7 @@ import os
 
 from tornado import web, ioloop
 from db import createDB
-from handlers import IndexHandler, SocketHandler, FriendHandler
-
+from handlers import IndexHandler, SocketHandler, FriendHandler, GetHandler
 
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
@@ -16,7 +15,8 @@ application = web.Application([
     (r'/', IndexHandler),
     (r'/index', IndexHandler),
     (r'/socket', SocketHandler),
-    (r'/friend', FriendHandler)
+    (r'/friend', FriendHandler),
+    (r'/get', GetHandler)
 ], **settings)
 
 port = int(os.environ.get('PORT', 8080))

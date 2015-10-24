@@ -74,11 +74,6 @@ class SocketHandler(websocket.WebSocketHandler):
             players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
-            rows = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(rows))
-        elif message[ACTION_FIELD] == LIST_ACTION:
-            rows = db.readRecords()
-            self.write_message(msg.showRank(rows))
 
     def on_close(self):
         close(self)
@@ -106,11 +101,6 @@ class FriendHandler(websocket.WebSocketHandler):
             players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
-            rows = db.readRecords()
-            players[message[ID]].socket.write_message(msg.showRank(rows))
-        elif message[ACTION_FIELD] == LIST_ACTION:
-            rows = db.readRecords()
-            self.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == 'friend':
             if message[MSG] in players:
                 if not players[message[MSG]].game:
@@ -122,6 +112,11 @@ class FriendHandler(websocket.WebSocketHandler):
 
     def on_close(self):
         close(self)
+
+class GetHandler(web.RequestHandler):
+    def get(self):
+        rows = db.readRecords()
+        self.write({"rank" : rows})
 
 class IndexHandler(web.RequestHandler):
     def get(self):
