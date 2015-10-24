@@ -113,7 +113,7 @@ class FriendHandler(websocket.WebSocketHandler):
             self.write_message(msg.showRank(rows))
         elif message[ACTION_FIELD] == 'friend':
             if message[MSG] in players:
-                if not self.player.game or not players[message[MSG]].game:
+                if not players[message[MSG]].game:
                     Game(self.player, players[message[MSG]]).start()
                 else:
                     self.write_message(msg.noFriend())
