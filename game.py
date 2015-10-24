@@ -6,6 +6,9 @@ class Game(object):
         self.player1 = player1
         self.player2 = player2
 
+    def start(self):
+        pass
+
 class Player(object):
 
     def __init__(self, id, socket):

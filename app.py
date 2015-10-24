@@ -1,7 +1,7 @@
 import os
-import random
 from tornado import web, ioloop, websocket
-from game import Player
+from game import Player, Game
+from utils import get_random
 
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
@@ -11,25 +11,28 @@ settings = {
 }
 
 players = {}
-free_sockets = {}
+free_players = []
 games = {}
 
 class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
-        id = self.get_random()
-        players[id] = Player(id, self)
+        id = get_random()
+        player =  Player(id, self)
+        players[id] = player
 
         print 'connection opened with id =', id
         self.write_message({"id": id})
 
-        '''
-        if len(free_sockets) != 0:
+        if len(free_players) != 0:
             # match waiting player
-            another_player = free_sockets.popitem()
-            games[another_player.id + ':' + id] =
-        # wait for another player
-        '''
+            another_player = free_players.pop()
+            game = Game(id, player, another_player)
+            games[get_random()] = game
+            game.start()
+        else:
+            # wait for another player
+            free_players.append(player)
 
 
 
@@ -41,9 +44,6 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def on_close(self):
         print 'connection closed...'
-
-    def get_random(self):
-        return random.randint(1000000, 9999999)
 
 
 class IndexHandler(web.RequestHandler):
