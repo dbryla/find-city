@@ -21,16 +21,14 @@ class Game(object):
 
     def end(self):
         if self.completed:
-            winner = self.chooseWinner()
-            game_end_message = gameEnd(winner)
+            game_end_message = gameEnd(self.chooseWinner())
             self.player1.socket.write_message(game_end_message)
             self.player2.socket.write_message(game_end_message)
-            pass
         else:
             self.completed = True
 
     def chooseWinner(self):
-        pass
+        "TODO: chooseWinner"
 
 
 class Player(object):
@@ -44,6 +42,10 @@ class Player(object):
 
     def setGame(self, game):
         self.game = game
+
+    def endGame(self, click):
+        self.click = click
+        self.game.end()
 
 class City(object):
 
