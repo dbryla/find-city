@@ -1,0 +1,32 @@
+#game-wrapper {
+    display: none;
+    text-align: center;
+    margin-top: 30px;
+}
+
+#game {
+    margin-top: 8px;
+}
+
+#flag {
+    width: 55px;
+    height: 30px;
+    margin: 0 15px;
+}
+
+.tab {
+    border: 1px solid #e3e3e3;
+    padding: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: 20px;
+    display: none;
+}
+
+.tab-top {
+}
+
+.tab-bottom {
+    padding-bottom: 15px;
+    line-height: 2.4;
+}
