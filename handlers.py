@@ -17,6 +17,7 @@ X = 'x'
 Y = 'y'
 MSG = 'msg'
 RECORD_ACTION = 'record'
+LIST_ACTION ='list'
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -52,6 +53,9 @@ class SocketHandler(websocket.WebSocketHandler):
             players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
+            (dbnames, dbpoints) = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+        elif message[ACTION_FIELD] == LIST_ACTION:
             (dbnames, dbpoints) = db.readRecords()
             players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
 
@@ -93,14 +97,21 @@ class FriendHandler(websocket.WebSocketHandler):
             message[ID]
         except:
             raise web.HTTPError(400, "ERROR: No id.")
-
-        if message[ACTION_FIELD] == 'friend':
+        if message[ACTION_FIELD] == PLAY_ACTION:
+            players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
+        elif message[ACTION_FIELD] == RECORD_ACTION:
+            db.saveRecord(message[MSG], players[message[ID]].record)
+            (dbnames, dbpoints) = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+        elif message[ACTION_FIELD] == LIST_ACTION:
+            (dbnames, dbpoints) = db.readRecords()
+            players[message[ID]].socket.write_message(msg.showRank(dbnames, dbpoints))
+        elif message[ACTION_FIELD] == 'friend':
             if message[MSG] in players:
                 Game(self.player, players[message[MSG]]).start()
             else:
                 self.write_message(msg.noFriend())
-        if message[ACTION_FIELD] == PLAY_ACTION:
-            players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
+
 
     def on_close(self):
         id = sockets[self]
