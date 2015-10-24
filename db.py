@@ -48,7 +48,7 @@ def isNewRecord(result):
     connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
     try:
-        cursor.execute("SELECT name, points FROM Rank WHERE points > {}".format(result))
+        cursor.execute("SELECT points FROM Rank WHERE points > {}".format(result))
         rows = cursor.fetchall()
         connection.close()
         if len(rows) < 10:
@@ -62,11 +62,11 @@ def saveRecord(name, record):
     cursor = connection.cursor()
     query = 'INSERT INTO Rank (name, points) VALUES (\"{}\", \"{}\")'
     cursor.execute(query.format(name, record))
+    connection.commit()
     connection.close()
 
 def readRecords():
     connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
     cursor.execute("SELECT name, points FROM Rank ORDER BY points DESC LIMIT 10")
-    rows = cursor.fetchall()
-    return rows
+    return cursor.fetchall()
