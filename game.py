@@ -1,3 +1,4 @@
+from threading import Timer
 from msg import gameStart, gameEnd, gameWait
 from utils import generateCity, distance
 import time
@@ -5,6 +6,7 @@ import time
 
 class Game(object):
     completed = False
+    timeout = True
 
     def __init__(self, player1, player2):
         self.round_number = 1
@@ -12,6 +14,8 @@ class Game(object):
         self.player1 = player1
         player2.setGame(self)
         self.player2 = player2
+        self.result1 = 0
+        self.result2 = 0
 
     def start(self):
         self.city = generateCity()
@@ -20,10 +24,20 @@ class Game(object):
         self.sendToPlayers(wait)
         time.sleep(5)
         self.sendToPlayers(start)
+        self.timer = Timer(15.0, self.timeoutFunction)
+        self.timer.start()
 
-    def end(self):
+    def timeoutFunction(self):
+        if self.timeout:
+            self.end(True)
+
+    def end(self, timed = False):
         if self.completed:
-            game_end_message = gameEnd(self.chooseWinner())
+            self.completed = False
+            self.timeout = False
+            self.timer.cancel()
+            self.timeout = True
+            game_end_message = gameEnd(self.chooseWinner(timed))
             self.round_number += 1
             self.player1.click = None
             self.player2.click = None
@@ -33,23 +47,61 @@ class Game(object):
         else:
             self.completed = True
 
-    def chooseWinner(self):
-        player1 = {"x": self.player1.click.x, "y": self.player1.click.y, "time": self.player1.click.time}
-        player2 = {"x": self.player2.click.x, "y": self.player2.click.y, "time": self.player2.click.time}
+    def returnPlayerData(self, player):
+        player_x = player.click.x
+        player_y = player.click.y
+        return ({"x": player_x, "y": player_y, "time": player.click.time},
+                distance(player_x, player_y, self.city.x, self.city.y))
 
-        dist1 = distance(player1["x"], player1["y"], self.city.x, self.city.y)
-        dist2 = distance(player2["x"], player2["y"], self.city.x, self.city.y)
-
-        result1 = dist1 + player1["time"]
-        result2 = dist2 + player2["time"]
-
-        return {    "players": 
-                        [
-                            {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1, "click": player1 },
-                            {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2, "click": player2 }
-                        ],
+    def chooseWinner(self, timed = False):
+        if timed:
+            print 'timeout occurs'
+            if not self.player1.click and not self.player2.click:
+                return {}
+            elif self.player2.click:
+                player2, dist2 = self.returnPlayerData(self.player2)
+                point2 = 10000 / dist2
+                self.result2 = self.result2 +  point2
+                return {"players":
+                    [
+                        {"id": self.player1.id, "win": False, "point": 0, "result": self.result1},
+                        {"id": self.player2.id, "win": True, "dist": dist2, "point": point2,
+                         "click": player2, "result": self.result2}
+                    ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }
+            else:
+                player1, dist1 = self.returnPlayerData(self.player1)
+                point1 = 10000 / dist1
+                self.result1 = self.result1 +  point1
+                return {"players":
+                    [
+                        {"id": self.player1.id, "win": True, "dist": dist1, "point": point1,
+                         "click": player1, "result": self.result2},
+                        {"id": self.player2.id, "win": False, "point": 0, "result": self.result2},
+                    ],
+                    "location": {"x": self.city.x, "y": self.city.y}
+                }
+        else:
+            player1, dist1 = self.returnPlayerData(self.player1)
+            player2, dist2 = self.returnPlayerData(self.player2)
+            result1 = dist1 + player1["time"]
+            result2 = dist2 + player2["time"]
+
+            point1 = 10000 / dist1
+            self.result1 = self.result1 +  point1
+            point2 = 10000 / dist2
+            self.result2 = self.result2 +  point2
+
+        return {"players":
+            [
+                {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": point1,
+                 "click": player1, "result": self.result1},
+                {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": point2,
+                 "click": player2, "result": self.result2}
+            ],
+            "location": {"x": self.city.x, "y": self.city.y}
+        }
 
     def rageQuit(self, id):
         if id != self.player1.id:
@@ -67,6 +119,7 @@ class Player(object):
         self.id = id
         self.socket = socket
         self.click = None
+        self.game = None
 
     def setPartner(self, player):
         self.partner = player

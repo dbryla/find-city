@@ -24,7 +24,7 @@ class SocketHandler(websocket.WebSocketHandler):
         id = getRandom()
         player = Player(id, self)
         players[id] = player
-        sockets[self] = id;
+        sockets[self] = id
 
         print 'connection opened with id =', id
 
@@ -52,17 +52,21 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_close(self):
-        players[sockets[self]].game.rageQuit(sockets[self])
-
         id = sockets[self]
 
-        player1 = players[id].game.player1
-        player2 = players[id].game.player2
+        if players[id] in free_players:
+            free_players.remove(players[id])
 
-        del sockets[player1.socket]
-        del sockets[player2.socket]
-        del players[player1.id]
-        del players[player2.id]
+        if players[id].game:
+            players[sockets[self]].game.rageQuit(sockets[self])
+
+            player1 = players[id].game.player1
+            player2 = players[id].game.player2
+
+            del sockets[player1.socket]
+            del sockets[player2.socket]
+            del players[player1.id]
+            del players[player2.id]
 
         print 'connection closed...'
 
