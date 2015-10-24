@@ -19,15 +19,18 @@ function showCorrectLocation(realPos, opponentPos){
     attr.r = 0;
     dots[0].stop().attr(attr).animate({r: 8}, 1000, "elastic");
     
-    attr = getXY(opponentPos.x, opponentPos.y);
-    attr.r = 0;
-    dots[1].stop().attr(attr).animate({r: 5}, 1000, "elastic");
+    if(opponentPos && ((opponentPos.x && opponentPos.y) || opponentPos.x === 0 || opponentPos.y)){
+        attr = getXY(opponentPos.x, opponentPos.y);
+        attr.r = 0;
+        dots[1].stop().attr(attr).animate({r: 5}, 1000, "elastic");
+    }
 }
 
 function toggleClick(){
     enableClick = true;
     dots[0].attr({r: 0});
     dots[1].attr({r: 0});
+    dots
 }
 
 function loadMap(){
@@ -54,11 +57,11 @@ function loadMap(){
         clickMap(getLatLon(event.layerX, event.layerY));
     });
 
-    var dotLocation = r.circle(0, 0, 0).attr({fill: "r#4263AF:50-#082D81:100", stroke: "#000e", "stroke-width": 2, r: 0});
-    var dotOpponent  = r.circle(0,0,0).attr({fill: "r#91E547:50-#51AC00:100", stroke: "#000e", "stroke-width": 2, r: 0});
+    var dotLocation = r.circle(0, 0, 0).attr({fill: "r#91E547:50-#51AC00:100", stroke: "#000e", "stroke-width": 2, r: 0});
+    var dotOpponent  = r.circle(0,0,0).attr({fill: "r#4263AF:50-#082D81:100", stroke: "#fff", "stroke-width": 2, r: 0});
     var dot = r.circle(0,0,0).attr({fill: "r#FE7727:50-#F57124:100", stroke: "#fff", "stroke-width": 2, r: 0});
 
-    dots = [dotLocation, dotOpponent];
+    dots = [dotLocation, dotOpponent, dot];
 
     function clickMap(oLatLon){
         if(enableClick){

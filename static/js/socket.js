@@ -18,6 +18,9 @@ function initSocket(friend) {
         }
     });
 
+    var firstTime = true;
+    var round = 0;
+
     if (socket) {
         socket.onopen = function () {
             showServerResponse("connection opened....");
@@ -25,9 +28,6 @@ function initSocket(friend) {
 
         socket.onmessage = function (msg) {
             var obj = JSON.parse(msg.data);
-            /*  action:  start - miasto
-             | end
-             */
 
             switch (obj["action"]) {
                 case "init":
@@ -40,6 +40,7 @@ function initSocket(friend) {
                     break;
                 case "start":
                     ask_question(obj["msg"]["country"], obj["msg"]["name"]);
+                    startTimer(10, "Round end in: ");
                     incRound();
                     toggleClick();
                     break;
@@ -58,10 +59,26 @@ function initSocket(friend) {
 
                     showCorrectLocation(obj["msg"]["location"], opponent["click"]);
 
+                    if(++round == 10){
+                        playerScore = parseInt(player["result"]);
+                        opponentScore = parseInt(opponent["result"]);
+                        if(playerScore > opponentScore){
+                            showModal("You win");
+                        } else if(playerScore == opponentScore) {
+                            showModal("Tie");
+                        } else {
+                            showModal("You lose");
+                        }
+                    }
+
                     break;
                 case "wait":
-                    closeWaitingModal();
-                    startTimer(5, "Game starts in: ");
+                    if(firstTime){
+                        closeWaitingModal();
+                        startTimer(5, "Game starts in: ");
+                    } else {
+                        startTimer(5, "Next round in:");
+                    }
                     break;
 
                 default:
