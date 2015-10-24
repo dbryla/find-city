@@ -1,3 +1,6 @@
+import time
+
+
 class Player(object):
     def __init__(self, id, socket):
         self.id = id
@@ -17,14 +20,16 @@ class Player(object):
     def endGame(self, click):
         if not self.click:
             self.click = click
+            self.click.time = self.game.calculateTime(time.time())
             self.game.end()
 
 
 class PlayerClick(object):
-    def __init__(self, x, y, time):
+    time = 0
+
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.time = time
 
 
 class City(object):

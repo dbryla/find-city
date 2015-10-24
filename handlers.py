@@ -15,7 +15,6 @@ PLAY_ACTION = 'play'
 ID = 'id'
 X = 'x'
 Y = 'y'
-TIME = 'time'
 MSG = 'msg'
 RECORD_ACTION = 'record'
 
@@ -50,7 +49,7 @@ class SocketHandler(websocket.WebSocketHandler):
             raise web.HTTPError(400, "ERROR: No id.")
 
         if message[ACTION_FIELD] == PLAY_ACTION:
-            players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
+            players[message[ID]].endGame(PlayerClick(message[X], message[Y]))
         elif message[ACTION_FIELD] == RECORD_ACTION:
             db.saveRecord(message[MSG], players[message[ID]].record)
             (dbnames, dbpoints) = db.readRecords()

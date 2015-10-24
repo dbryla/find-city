@@ -26,12 +26,16 @@ class Game(object):
         self.sendToPlayers(wait)
         time.sleep(5)
         self.sendToPlayers(start)
+        self.start_time = time.time()
         self.timer = Timer(15.0, self.timeoutFunction)
         self.timer.start()
 
     def timeoutFunction(self):
         if self.timeout:
             self.end(True)
+
+    def calculateTime(self, time):
+        return time - self.start_time
 
     def end(self, timed=False):
         if self.completed:
