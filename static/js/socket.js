@@ -100,6 +100,7 @@ function initSocket(friend) {
                     break;
                 case "quit":
                     showModal("You win! Your opponent has quit.");
+                    showRestartButton();
                     break;
 
                 default:
