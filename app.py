@@ -66,10 +66,7 @@ class FriendHandler(websocket.WebSocketHandler):
         id = getRandom()
         self.player = Player(id, self)
         players[id] = self.player
-        print 'connection opened with id =', id
-
         self.write_message(msg.init(id))
-
 
     def on_message(self, message):
         message = json.loads(message)
@@ -78,12 +75,12 @@ class FriendHandler(websocket.WebSocketHandler):
         except:
             raise web.HTTPError(400, "ERROR: No id.")
 
+        print players
         if message[ACTION_FIELD] == 'friend':
-            Game(self.player.id, players[message[MSG]]).start()
+            Game(self.player, players[message[MSG]]).start()
 
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
-
 
     def on_close(self):
         print 'connection closed...'

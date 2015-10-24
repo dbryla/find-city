@@ -3,14 +3,19 @@
     <title>Hello World!</title>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
-<body>
+<body><input type="button" id="target2">
 <div id="output"></div>
 <input type="button" id="target">
 <script>
     jQuery(function($){
-        var host = "ws://localhost:8080/socket";
+        var host = "ws://localhost:8080/friend";
         var socket = new WebSocket(host);
         var id;
+        $( "#target2" ).click(function() {
+             var wiad = '{"action": "friend", "msg": 2, "id": '+id+'}';
+            socket.send(wiad);
+        });
+
 
         $( "#target" ).click(function() {
             var x = id/1000;
