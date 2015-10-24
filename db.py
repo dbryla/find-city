@@ -8,9 +8,11 @@ def createDB():
     db_exists = False
     if os.path.isfile(DB_PATH):
         db_exists = True
+        print "database exists"
     connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
     if not db_exists:
+        print "creating database"
         try:
             cursor.execute("CREATE TABLE Cities (id INTEGER PRIMARY KEY, "
                                                 "country VARCHAR(255), "
@@ -24,7 +26,8 @@ def createDB():
                     cursor.execute(query.format(row[0], row[1], row[2], row[3]))
             connection.commit()
         except Exception:
-                raise
+            print "error"
+            raise
     connection.close()
 
 def getRandomCity(index):

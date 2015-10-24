@@ -56,6 +56,12 @@ class Game(object):
             {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2}
         ]
 
+    def rageQuit(self, id):
+        if id != self.player1.id:
+            self.player1.socket.write_message({"action": "quit"})
+        if id != self.player2.id:
+            self.player2.socket.write_message({"action": "quit"})
+
     def sendToPlayers(self, txt):
         self.player1.socket.write_message(txt)
         self.player2.socket.write_message(txt)

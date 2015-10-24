@@ -6,6 +6,7 @@ from utils import getRandom
 
 players = {}
 free_players = []
+sockets = {}
 
 ACTION_FIELD = 'action'
 PLAY_ACTION = 'play'
@@ -23,6 +24,8 @@ class SocketHandler(websocket.WebSocketHandler):
         id = getRandom()
         player = Player(id, self)
         players[id] = player
+        sockets[self] = id;
+
         print 'connection opened with id =', id
 
         self.write_message(msg.init(id))
@@ -51,6 +54,18 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_close(self):
+        players[sockets[self]].game.rageQuit(sockets[self])
+
+        id = sockets[self]
+
+        player1 = players[id].game.player1
+        player2 = players[id].game.player2
+
+        del sockets[player1.socket]
+        del sockets[player2.socket]
+        del players[player1.id]
+        del players[player2.id]
+
         print 'connection closed...'
 
 class FriendHandler(websocket.WebSocketHandler):
