@@ -1,6 +1,7 @@
 import os
 import random
 from tornado import web, ioloop, websocket
+from game import Player
 
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
@@ -9,21 +10,32 @@ settings = {
     "autoreload": True
 }
 
-sockets = {}
-
+players = {}
+free_sockets = {}
+games = {}
 
 class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
         id = self.get_random()
-        sockets[id] = self
+        players[id] = Player(id, self)
+
         print 'connection opened with id =', id
         self.write_message({"id": id})
 
-    def on_message(self, message):
+        '''
+        if len(free_sockets) != 0:
+            # match waiting player
+            another_player = free_sockets.popitem()
+            games[another_player.id + ':' + id] =
+        # wait for another player
+        '''
 
-        for x, y in sockets.items():
-            y.write_message({"msg": message})
+
+
+    def on_message(self, message):
+        for id in players:
+            players[id].socket.write_message({"msg": message})
 
         print 'received:', message
 
