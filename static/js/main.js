@@ -27,7 +27,6 @@ function initSocket(){
               }
 
               socket.onmessage = function(msg){
-                console.log(msg.data);
                 var obj = JSON.parse(msg.data);
                 /*  action:  start - miasto
                            | end   
@@ -36,7 +35,6 @@ function initSocket(){
                 switch(obj["action"]){
                     case "init":
                         id = obj["msg"];
-                        showServerResponse("Your id:"+id);
                         break;
                     case "start":
                         ask_question(obj["msg"]["country"], obj["msg"]["name"]);
@@ -57,6 +55,10 @@ function initSocket(){
                         } else {
                             alert("Przegralem");
                         }
+                        break;
+                    case "wait":
+                        startTimer(5, "Game starts in: ");
+                        break;
 
                     default:
                         showServerResponse(obj["msg"]);
@@ -76,7 +78,6 @@ function initSocket(){
             }
 
             send = function(msg){
-                console.log(msg);
                 var wiad = '{"action": "play", "x": '+msg.lat +', "y": '+msg.lon+', "time": 100, "id": '+id+'}';
                 socket.send(wiad);
             }
@@ -85,14 +86,9 @@ function initSocket(){
 function init() {
     $("#play-btn").click(function () {
         setGameScene();
-        ask_question("de", "Berlin");
-        startTimer(5, "Next country in: ");
-        setPlayerScore(12120);
-        setOpponentScore(424);
-        setPlayerInfo(1238, 123);
-        setOpponentInfo(8567, 41);
+        setPlayerScore(0);
+        setOpponentScore(0);
         setRound(1, 10);
-        incRound();
         initSocket();
         //hideInfo();
     });
@@ -100,5 +96,4 @@ function init() {
 
 $(document).ready(function () {
     init();
-    //$("#play-btn").click();  //for debugging purpose only
 });
