@@ -39,3 +39,12 @@
 .bold {
     font-weight: bold;
 }
+
+#restart-btn {
+    margin-top: -2px;
+    margin-left: 2px;
+}
+
+.no-border {
+    border: none;
+}

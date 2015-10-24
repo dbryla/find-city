@@ -25,6 +25,13 @@ function init() {
         initGame();
         initSocket(true);
     });
+    $("#restart-btn").click(function () {
+        hideInfo();
+        hideTimer();
+        hideQuestion();
+        hideRestartButton();
+        setWelcomeScene();
+    });
 }
 
 $(document).ready(function () {

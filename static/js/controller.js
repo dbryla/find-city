@@ -1,5 +1,15 @@
 var timerInterval = 0;
 
+function hideRestartButton() {
+    $("#restart").hide();
+    $("#round").show();
+}
+
+function showRestartButton() {
+    $("#restart").show();
+    $("#round").hide();
+}
+
 function showRecordModal() {
     var modal = $('#record-modal');
     modal.modal({
@@ -102,12 +112,20 @@ function startTimer(value, text) {
     $("#timer-text").text(text);
 }
 
-function ask_question(country_code, city) {
+function hideTimer() {
+    $("#timer").hide();
+}
+
+function askQuestion(country_code, city) {
     var countryStr = worldmap.names[country_code.toUpperCase()];
     $("#question").show();
     $("#country").text(countryStr);
     $("#flag").attr("src", "static/img/flags/" + country_code.toLowerCase() + ".png");
     $("#city").text(city);
+}
+
+function hideQuestion() {
+    $("#question").hide();
 }
 
 function setGameScene() {

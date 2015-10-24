@@ -48,7 +48,7 @@ function initSocket(friend) {
                     }
                     break;
                 case "start":
-                    ask_question(obj["msg"]["country"], obj["msg"]["name"]);
+                    askQuestion(obj["msg"]["country"], obj["msg"]["name"]);
                     startTimer(10, "Round end in: ");
                     incRound();
                     toggleClick();
@@ -84,6 +84,7 @@ function initSocket(friend) {
                         } else {
                             showModal("You lose");
                         }
+                        showRestartButton();
                     }
 
                     break;
