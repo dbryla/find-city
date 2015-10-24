@@ -20,7 +20,7 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
         id = getRandom()
-        player =  Player(id, self)
+        player = Player(id, self)
         players[id] = player
 
         print 'connection opened with id =', id
@@ -40,7 +40,13 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_message(self, message):
+
         msg = json.loads(message)
+        try:
+            msg["id"]
+        except:
+            raise web.HTTPError(400, "ERROR: No id.")
+
         for id in players:
             players[id].socket.write_message({"msg": msg["msg"]})
 
