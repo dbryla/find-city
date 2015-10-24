@@ -1,5 +1,5 @@
 import json
-from tornado import websocket, web
+from tornado import websocket, web, gen
 from game import Player, Game, PlayerClick
 import msg
 from utils import getRandom
@@ -18,6 +18,7 @@ NEXT_ROUND = 'next'
 
 class SocketHandler(websocket.WebSocketHandler):
 
+    @gen.coroutine
     def open(self):
         id = getRandom()
         player = Player(id, self)
@@ -46,7 +47,7 @@ class SocketHandler(websocket.WebSocketHandler):
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
         if message[ACTION_FIELD] == NEXT_ROUND:
-            players[message[ID]].game.start()
+            players[message[ID]].game.nextRound()
 
 
     def on_close(self):
