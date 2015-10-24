@@ -1,4 +1,5 @@
 import os
+import json
 from tornado import web, ioloop, websocket
 from game import Player, Game
 from utils import getRandom
@@ -13,6 +14,7 @@ settings = {
 players = {}
 free_players = []
 games = {}
+
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -38,8 +40,9 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_message(self, message):
+        msg = json.loads(message)
         for id in players:
-            players[id].socket.write_message({"msg": message})
+            players[id].socket.write_message({"msg": msg["msg"]})
 
         print 'received:', message
 

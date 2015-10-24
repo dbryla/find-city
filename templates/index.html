@@ -14,7 +14,8 @@
         if(socket){
               socket.onopen = function(){
                 showServerResponse("connection opened....");
-                socket.send("DupaDupa");
+                msg = '{"id": 1, "msg": "dupadupa"}';
+                socket.send(msg);
               }
 
               socket.onmessage = function(msg){
