@@ -77,7 +77,7 @@ class Game(object):
                 return {}
             elif self.player2.click:
                 player2, dist2 = self.returnPlayerData(self.player2)
-                point2 = calculatePoints(dist2, player2.time)
+                point2 = calculatePoints(dist2, player2["time"])
                 self.result2 += point2
                 newRecords = self.checkRecords()
                 return {"players":
@@ -91,7 +91,7 @@ class Game(object):
                 }
             else:
                 player1, dist1 = self.returnPlayerData(self.player1)
-                point1 = calculatePoints(dist1, player1.time)
+                point1 = calculatePoints(dist1, player1["time"])
                 self.result1 += point1
                 newRecords = self.checkRecords()
                 return {"players":
