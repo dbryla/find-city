@@ -1,2 +1,2 @@
 Tornado==4.2.1
-db-sqlite3=0.0.1
+db-sqlite3==0.0.1
