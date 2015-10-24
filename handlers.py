@@ -14,6 +14,7 @@ X = 'x'
 Y = 'y'
 TIME = 'time'
 MSG = 'msg'
+NEXT_ROUND = 'next'
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -44,6 +45,8 @@ class SocketHandler(websocket.WebSocketHandler):
 
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
+        if message[ACTION_FIELD] == NEXT_ROUND:
+            players[message[ID]].game.start()
 
 
     def on_close(self):
