@@ -4,27 +4,43 @@
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-<p>Hello world!</p>
-
+<div id="output"></div>
 <script>
     jQuery(function($){
         var host = "ws://localhost:8080/socket";
         var socket = new WebSocket(host);
+        var id;
 
         if(socket){
               socket.onopen = function(){
-                alert("connection opened....");
+                showServerResponse("connection opened....");
+                socket.send("DupaDupa");
               }
 
               socket.onmessage = function(msg){
+              var obj = JSON.parse(msg.data);
+
+                if(obj["id"]){
+                    id = obj["id"];
+                    showServerResponse(id);
+                }
+                else{
+                    showServerResponse(obj["msg"]);
+                }
               }
 
               socket.onclose = function(){
-                alert("connection closed....");
+                showServerResponse("connection closed....");
               }
 
             }else{
               console.log("invalid socket");
+            }
+
+            function showServerResponse(txt){
+                var p = document.createElement('p');
+                p.innerHTML = txt;
+                document.getElementById('output').appendChild(p);
             }
     });
 
