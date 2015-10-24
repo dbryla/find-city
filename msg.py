@@ -1,6 +1,9 @@
 def gameStart():
     return "TODO"
 
+def gameEnd():
+    return "TODO"
+
 def init(id):
     return {"action": "init", "id": id}
 
