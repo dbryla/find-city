@@ -15,6 +15,17 @@ function initGame() {
     hideInfo();
 }
 
+function loadFlags(countryList){
+    if(countryList.length == 0){
+        init();
+    } else {
+        var country = countryList[0];
+        var img = new Image();
+        img.onload = function(){loadFlags(countryList.slice(1))};
+        img.src = "static/img/flags/" + country.toLowerCase() + ".png";
+    }
+}
+
 function init() {
     loadMap();
     $("#play-btn").click(function () {
@@ -45,5 +56,7 @@ function init() {
 }
 
 $(document).ready(function () {
-    init();
+    console.log(Object.keys(worldmap.names));
+    loadFlags(Object.keys(worldmap.names));
+    //init();
 });
