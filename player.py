@@ -7,6 +7,7 @@ class Player(object):
         self.socket = socket
         self.click = None
         self.game = None
+        self.record = 0
 
     def setPartner(self, player):
         self.partner = player

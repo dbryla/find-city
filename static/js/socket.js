@@ -18,6 +18,15 @@ function initSocket(friend) {
         }
     });
 
+    $("#record-btn").click(function () {
+        var username = $("#record-name").val();
+        if (username.length > 0) {
+            var wiad = '{"action": "record", "msg": "' + username + '", "id": ' + id + '}';
+            console.log(wiad);
+            socket.send(wiad);
+        }
+    });
+
     var firstTime = true;
     var round = 0;
 
@@ -62,13 +71,15 @@ function initSocket(friend) {
                     setOpponentScore(parseInt(opponent["result"]));
 
                     showCorrectLocation(obj["msg"]["location"], opponent["click"]);
-
-                    if(++round == 10){
+                    if (++round == 10) {
                         playerScore = parseInt(player["result"]);
                         opponentScore = parseInt(opponent["result"]);
-                        if(playerScore > opponentScore){
+                        if (player["record"]) {
+                            showRecordModal();
+                        }
+                        if (playerScore > opponentScore) {
                             showModal("You win");
-                        } else if(playerScore == opponentScore) {
+                        } else if (playerScore == opponentScore) {
                             showModal("Tie");
                         } else {
                             showModal("You lose");
@@ -77,7 +88,7 @@ function initSocket(friend) {
 
                     break;
                 case "wait":
-                    if(firstTime){
+                    if (firstTime) {
                         closeWaitingModal();
                         startTimer(5, "Game starts in: ");
                     } else {

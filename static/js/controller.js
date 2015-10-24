@@ -1,5 +1,14 @@
 var timerInterval = 0;
 
+function showRecordModal() {
+    var modal = $('#record-modal');
+    modal.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    modal.modal('show');
+}
+
 function showFriendModal(id) {
     var modal = $('#friend-modal');
     modal.modal({
