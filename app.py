@@ -33,7 +33,7 @@ application = web.Application([
     (r'/socket', SocketHandler)
 ], **settings)
 
-port = 8080
+port = int(os.environ.get('PORT', 8080))
 
 if __name__ == '__main__':
     application.listen(port)
