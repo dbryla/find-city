@@ -26,19 +26,19 @@ class Game(object):
 
     def timeoutFunction(self):
         if self.timeout:
-            self.end()
+            self.end(True)
+        self.timeout = True
 
-    def end(self):
+    def end(self, timed = False):
         if self.completed:
-            game_end_message = gameEnd(self.chooseWinner())
             self.timeout = False
+            game_end_message = gameEnd(self.chooseWinner(timed))
             self.round_number += 1
             self.player1.click = None
             self.player2.click = None
             self.sendToPlayers(game_end_message)
             if self.round_number <= 10:
-                self.timeout = True
-                #self.start()
+                self.start()
         else:
             self.completed = True
 
@@ -48,8 +48,8 @@ class Game(object):
         return ({"x": player_x, "y": player_y, "time": player.click.time},
                 distance(player_x, player_y, self.city.x, self.city.y))
 
-    def chooseWinner(self):
-        if self.timeout:
+    def chooseWinner(self, timed = False):
+        if timed:
             print 'timeout occurs'
             if not self.player1.click and not self.player2.click:
                 return {}

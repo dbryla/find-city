@@ -24,7 +24,7 @@ class SocketHandler(websocket.WebSocketHandler):
         id = getRandom()
         player = Player(id, self)
         players[id] = player
-        sockets[self] = id;
+        sockets[self] = id
 
         print 'connection opened with id =', id
 
