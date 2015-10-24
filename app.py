@@ -1,7 +1,7 @@
 import os
 from tornado import web, ioloop, websocket
 from game import Player, Game
-from utils import get_random
+from utils import getRandom
 
 settings = {
     "template_path": os.path.join(os.path.dirname(__file__), "templates"),
@@ -17,7 +17,7 @@ games = {}
 class SocketHandler(websocket.WebSocketHandler):
 
     def open(self):
-        id = get_random()
+        id = getRandom()
         player =  Player(id, self)
         players[id] = player
 
@@ -27,8 +27,9 @@ class SocketHandler(websocket.WebSocketHandler):
         if len(free_players) != 0:
             # match waiting player
             another_player = free_players.pop()
-            game = Game(id, player, another_player)
-            games[get_random()] = game
+            game_id = getRandom()
+            game = Game(game_id, player, another_player)
+            games[game_id] = game
             game.start()
         else:
             # wait for another player

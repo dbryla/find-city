@@ -1,4 +1,7 @@
 import random
 
-def get_random():
+def getRandom():
     return random.randint(1000000, 9999999)
+
+def generateCity():
+    pass

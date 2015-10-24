@@ -1,3 +1,5 @@
+from utils import generateCity
+
 
 class Game(object):
 
@@ -7,7 +9,7 @@ class Game(object):
         self.player2 = player2
 
     def start(self):
-        pass
+        self.city = generateCity()
 
 class Player(object):
 
