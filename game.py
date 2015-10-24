@@ -38,7 +38,7 @@ class Game(object):
             self.sendToPlayers(game_end_message)
             if self.round_number <= 10:
                 self.timeout = True
-                self.start()
+                #self.start()
         else:
             self.completed = True
 
