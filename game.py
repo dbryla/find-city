@@ -43,10 +43,10 @@ class Game(object):
         result1 = dist1 + player1["time"]
         result2 = dist2 + player2["time"]
 
-        return {    "players": 
+        return {"players":
                         [
-                            {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1, "click": player1 },
-                            {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist2, "click": player2 }
+                            {"id": self.player1.id, "win": result1 < result2, "dist": dist1, "point": 10000 / dist1, "click": player1, "result1": self.game.result1},
+                            {"id": self.player2.id, "win": result1 > result2, "dist": dist2, "point": 10000 / dist1, "click": player2, "player1": self.game.result1 }
                         ],
                     "location": {"x": self.city.x, "y": self.city.y}
                 }

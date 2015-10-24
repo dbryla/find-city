@@ -52,17 +52,22 @@ class SocketHandler(websocket.WebSocketHandler):
 
 
     def on_close(self):
-        players[sockets[self]].game.rageQuit(sockets[self])
-
         id = sockets[self]
+        print free_players
+        print players[id]
 
-        player1 = players[id].game.player1
-        player2 = players[id].game.player2
+        free_players.remove(players[id])
 
-        del sockets[player1.socket]
-        del sockets[player2.socket]
-        del players[player1.id]
-        del players[player2.id]
+        if players[id].game:
+            players[sockets[self]].game.rageQuit(sockets[self])
+
+            player1 = players[id].game.player1
+            player2 = players[id].game.player2
+
+            del sockets[player1.socket]
+            del sockets[player2.socket]
+            del players[player1.id]
+            del players[player2.id]
 
         print 'connection closed...'
 
