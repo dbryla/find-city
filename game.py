@@ -35,6 +35,8 @@ class Game(object):
         if self.completed:
             game_end_message = gameEnd(self.chooseWinner())
             self.round_number += 1
+            self.player1.click = None
+            self.player2.click = None
             self.sendToPlayers(game_end_message)
         else:
             self.completed = True
@@ -63,6 +65,7 @@ class Player(object):
     def __init__(self, id, socket):
         self.id = id
         self.socket = socket
+        self.click = None
 
     def setPartner(self, player):
         self.partner = player
@@ -71,8 +74,9 @@ class Player(object):
         self.game = game
 
     def endGame(self, click):
-        self.click = click
-        self.game.end()
+        if not self.click:
+            self.click = click
+            self.game.end()
 
 
 class PlayerClick(object):
