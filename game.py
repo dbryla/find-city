@@ -46,4 +46,12 @@ class Player(object):
         self.game = game
 
 class City(object):
-    pass
+
+    def __init__(self, name, country, x, y):
+        self.name = name
+        self.country = country
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return str({"name": self.name, "country": self.country, "x": self.x, "y": self.y})
