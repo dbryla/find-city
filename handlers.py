@@ -53,10 +53,9 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def on_close(self):
         id = sockets[self]
-        print free_players
-        print players[id]
 
-        free_players.remove(players[id])
+        if players[id] in free_players:
+            free_players.remove(players[id])
 
         if players[id].game:
             players[sockets[self]].game.rageQuit(sockets[self])

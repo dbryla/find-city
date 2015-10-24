@@ -105,6 +105,7 @@ class Player(object):
         self.id = id
         self.socket = socket
         self.click = None
+        self.game = None
 
     def setPartner(self, player):
         self.partner = player
