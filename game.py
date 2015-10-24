@@ -125,9 +125,9 @@ class Game(object):
         }
 
     def rageQuit(self, id):
-        if id != self.player1.id:
+        if id != self.player1.id and self.round_number <= 10:
             self.player1.socket.write_message({"action": "quit"})
-        if id != self.player2.id:
+        if id != self.player2.id and self.round_number <= 10:
             self.player2.socket.write_message({"action": "quit"})
 
     def sendToPlayers(self, txt):
