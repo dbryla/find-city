@@ -28,50 +28,59 @@
     <script src="js/raphael.js"></script>
     <script src="js/world.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/controller.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
-    <div class="site-wrapper">
-        <div class="site-wrapper-inner">
-            <div class="cover-container">
-                <div class="masthead clearfix">
-                    <div class="inner">
-                        <h3 class="masthead-brand">FindCities</h3>
-                        <nav>
-                            <ul class="nav masthead-nav">
-                                <li class="active"><a href="main.htm">Home</a></li>
-                            </ul>
-                        </nav>
-                    </div>
+<div class="site-wrapper">
+    <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <div class="masthead clearfix">
+                <div class="inner">
+                    <h3 class="masthead-brand">FindCities</h3>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                            <li class="active"><a href="main.htm">Home</a></li>
+                        </ul>
+                    </nav>
                 </div>
-                <div id="welcome" class="inner cover">
-                    <h1 class="cover-heading">Test your knowledge</h1>
-                    <p class="lead">Check if you know localization of every city in the world.</p>
-                    <p class="lead">
-                        <a id="play-btn" class="btn btn-lg btn-default">Play now</a>
-                    </p>
-                </div>
-                <div id="game-wrapper" class="inner cover">
-                    <span id="score" class="top-tab"></span>
-                    <span id="question" class="top-tab">
+            </div>
+            <div id="welcome" class="inner cover">
+                <h1 class="cover-heading">Test your knowledge</h1>
+                <p class="lead">Check if you know localization of every city in the world.</p>
+                <p class="lead">
+                    <a id="play-btn" class="btn btn-lg btn-default">Play now</a>
+                </p>
+            </div>
+            <div id="game-wrapper" class="inner cover">
+                <!-- top tabs -->
+                <span id="player-score" class="tab tab-top"></span>
+                    <span id="question" class="tab tab-top">
                         <span id="city"></span>
                         <img id="flag" src="">
                         <span id="country"></span>
                     </span>
-                    <span id="timer" class="top-tab">
+                    <span id="timer" class="tab tab-top">
                         <span id="timer-text"></span>
                         <span id="timer-value"></span>
                     </span>
-                    <div id="game"></div>
-                </div>
-                <div class="mastfoot">
-                    <div class="inner">
-                        <p>Cover template for <a href="http://getbootstrap.com/">Bootstrap</a>, by <a
-                                href="https://twitter.com/mdo">@mdo</a>.</p>
-                    </div>
+                <span id="opponent-score" class="tab tab-top"></span>
+
+                <!-- game -->
+                <div id="game"></div>
+
+                <!-- bottom tabs -->
+                <span id="p1-info" class="tab tab-bottom"></span>
+                <span id="p2-info" class="tab tab-bottom"></span>
+            </div>
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Cover template for <a href="http://getbootstrap.com/">Bootstrap</a>, by <a
+                            href="https://twitter.com/mdo">@mdo</a>.</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
