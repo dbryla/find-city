@@ -1,7 +1,9 @@
 import json
 from tornado import websocket, web, gen
-from game import Player, Game, PlayerClick
+import db
+from game import Game
 import msg
+from player import PlayerClick, Player
 from utils import getRandom
 
 players = {}
@@ -15,7 +17,8 @@ X = 'x'
 Y = 'y'
 TIME = 'time'
 MSG = 'msg'
-NEXT_ROUND = 'next'
+RECORD_ACTION = 'record'
+NAME = 'name'
 
 class SocketHandler(websocket.WebSocketHandler):
 
@@ -31,11 +34,11 @@ class SocketHandler(websocket.WebSocketHandler):
         self.write_message(msg.init(id))
 
         if len(free_players) != 0:
-            # match waiting player
+            print 'match waiting player'
             another_player = free_players.pop()
             Game(player, another_player).start()
         else:
-            # wait for another player
+            print 'wait for another player'
             free_players.append(player)
 
 
@@ -49,7 +52,8 @@ class SocketHandler(websocket.WebSocketHandler):
 
         if message[ACTION_FIELD] == PLAY_ACTION:
             players[message[ID]].endGame(PlayerClick(message[X], message[Y], message[TIME]))
-
+        elif message[ACTION_FIELD] == RECORD_ACTION:
+            db.saveRecord(message[NAME], players[message[ID]].record)
 
     def on_close(self):
         id = sockets[self]
