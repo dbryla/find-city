@@ -26,7 +26,7 @@ function setRankScene() {
     $("#rank-li").addClass("active");
     $("#about-li").removeClass("active");
     $("#game-wrapper").hide();
-    recordSocket();
+    getRank();
 }
 
 function setAboutScene() {

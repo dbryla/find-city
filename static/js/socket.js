@@ -49,7 +49,7 @@ function initSocket(friend) {
                     break;
                 case "start":
                     askQuestion(obj["msg"]["country"], obj["msg"]["name"]);
-                    startTimer(10, "Round end in: ");
+                    startTimer(10, "Round ends in: ");
                     incRound();
                     toggleClick();
                     break;
