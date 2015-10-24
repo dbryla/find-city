@@ -30,7 +30,7 @@ function toggleClick(){
     enableClick = true;
     dots[0].attr({r: 0});
     dots[1].attr({r: 0});
-    dots
+    dots[2].attr({r: 0});
 }
 
 function loadMap(){

@@ -30,5 +30,6 @@ def distance(x1, y1, x2, y2):
 
     return distance
 
-def calculatePoints(dist):
-    return 10000 / dist
+def calculatePoints(dist, time):
+    # return 10000 / dist**(1.0/2) * max(10-time, 0)  ## type 1
+    return 10000 / dist**(13.0/17.0) * max(10-time, 0)**(4.0/5)
