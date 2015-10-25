@@ -17,7 +17,7 @@ function initGame() {
 
 function loadFlags(countryList){
     if(countryList.length == 0){
-        init();
+        //init();
     } else {
         var country = countryList[0];
         var img = new Image();
@@ -57,4 +57,5 @@ function init() {
 
 $(document).ready(function () {
     loadFlags(Object.keys(worldmap.names));
+    init();
 });

@@ -32,4 +32,4 @@ def distance(x1, y1, x2, y2):
 
 def calculatePoints(dist, time):
     # return 10000 / dist**(1.0/2) * max(10-time, 0)  ## type 1
-    return 10000 / dist**(13.0/17.0) * max(10-time, 0)**(2.0/5)
+    return 10000 / (dist**(13.0/17.0)+1) * max(10-time, 0)**(2.0/5)
